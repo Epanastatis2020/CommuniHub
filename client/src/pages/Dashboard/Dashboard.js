@@ -1,8 +1,7 @@
 import React from 'react';
-import Sidebar from '../../Sidebar/Sidebar';
-import DashboardNewsCard from '../../DashboardNewsCard/DashboardNewsCard';
-import { useAppContext } from '../../../store';
-import { useLoginCheck } from '../../../utils/setAuthToken';
+import Sidebar from '../../components/Sidebar/Sidebar';
+import { useAppContext } from '../../store';
+import { useLoginCheck } from '../../utils/setAuthToken';
 
 function DashBoard() {
     const [state, appDispatch] = useAppContext();
@@ -17,7 +16,6 @@ function DashBoard() {
                     Welcome {state.user.first_name} {state.user.last_name}
                 </h1>
                 <div className="flex-row-reverse mr-5 d-flex">
-                    <DashboardNewsCard />
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GET_ERRORS, SET_CURRENT_USER } from '../../actions/types';
+import { GET_ERRORS, SET_CURRENT_USER } from '../../services/actions/types';
 import { useAppContext } from '../../store';
 import { loginUser } from '../../utils/userFunctions';
 import { setAuthToken } from '../../utils/setAuthToken';

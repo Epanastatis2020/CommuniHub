@@ -1,6 +1,6 @@
 import React from 'react';
-import Landing from './components/pages/Landing/Landing';
-import { useAppContext } from './store';
+import Landing from '../pages/Landing/Landing';
+import { useAppContext } from '../store';
 
 function Auth(ComposedComponent) {
     const [ state ] = useAppContext();
