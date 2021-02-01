@@ -1,0 +1,8 @@
+.backgroundImg {
+    background-image: url(../../assets/images/Communihub.PNG);
+    background-size:     100%, auto;                  
+    background-repeat:   no-repeat;
+    background-position: center center;
+    height: 900px;
+    background-color: black;
+}
