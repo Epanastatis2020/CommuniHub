@@ -2,16 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar';
-import Landing from './components/pages/Landing/Landing';
+import Landing from './pages/Landing/Landing';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
-import Dashboard from './components/pages/Dashboard/Dashboard';
-import Other from './components/pages/Other/Other';
+import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
-import StartUp from './components/pages/StartUp/StartUp';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AppContextProvider } from './store';
-// import Auth from './Auth';
+//import Auth from './private-route/PrivateRoute'
+import Auth from './hoc/Auth';
 
 import './App.css';
 
@@ -26,9 +25,7 @@ function App() {
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/dashboard" component={Dashboard} />
-                        <Route exact path="/other" component={Other} />
-                        <Route exact path="/startUp" component={StartUp} />
+                        <Route exact path="/dashboard" component={Auth(Dashboard)} />
                     </div>
                 </div>
             </Router>

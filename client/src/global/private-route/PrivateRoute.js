@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAppContext } from '../store';
+import { useAppContext } from '../../store';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const [state] = useAppContext();

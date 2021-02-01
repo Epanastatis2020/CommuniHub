@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from '../actions/types';
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from '../services/actions/types';
 import jwt_decode from 'jwt-decode';
 
 const getToken = () => {

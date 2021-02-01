@@ -3,6 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register');
@@ -52,7 +55,6 @@ router.post('/api/register', (req, res) => {
 });
 
 router.post('/api/login', (req, res) => {
-
     // Form validation
     const { errors, isValid } = validateLoginInput(req.body);
 
@@ -73,6 +75,7 @@ router.post('/api/login', (req, res) => {
                         last_name: response.last_name,
                         email: response.email,
                     };
+                    console.log(process.env.SECRET_KEY);
                     let token = jwt.sign(payload, process.env.SECRET_KEY, {
                         // 1 year in seconds
                         expiresIn: 31556926,
