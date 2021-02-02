@@ -2,11 +2,37 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useAppContext } from '../../store';
 import { useLoginCheck, logout } from '../../utils/setAuthToken';
-import './style.css';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
-function Navbar() {
+import Sidebar from '../Sidebar/Sidebar';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
+
+export default function Navbar() {
     const history = useHistory();
     const [state, dispatch] = useAppContext();
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const [drawerOpen, setOpen] = React.useState(false);
 
     useLoginCheck(dispatch);
 
@@ -16,52 +42,76 @@ function Navbar() {
         history.push('/');
     };
 
+    const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+    setAnchorEl(null);
+    };
+
     const loginRegLink = (
-        <ul className="navbar-nav list-group list-group-horizontal">
-            <li>
-                <Link className="mb-1 mr-1 btn btn-sm active" to="/login">
-                    Login
+            <Toolbar>
+                <Link to="/login">
+                    <Button variant="contained" color="primary">Login</Button>
                 </Link>
-            </li>
-            <li>
-                <Link className="btn btn-sm active" to="/register">
-                    Register
+                <Link to="/register">
+                    <Button variant="contained" color="secondary">Register</Button>
                 </Link>
-            </li>
-        </ul>
+            </Toolbar>
     );
     const userLink = (
-        <ul className="navbar-nav list-group list-group-horizontal">
-            <li>
-                <Link className="mb-1 mr-1 btn btn-sm active" to="/">
-                    Home
-                </Link>
-            </li>
-            <li>
-                <Link className="mb-1 mr-1 btn btn-sm active" to="/dashboard">
-                    Dashboard
-                </Link>
-            </li>
-            <li>
-                <button
-                    className="btn btn-sm active"
-                    id="logoutBtn"
-                    data-toggle="modal"
-                    data-target="#logoutModal"
-                    onClick={handleLogOut}
-                >
-                    <div>Logout</div>
-                </button>
-            </li>
-        </ul>
+            <Toolbar>
+                <IconButton 
+                        edge="start" 
+                        className={classes.menuButton} 
+                        color="inherit" 
+                        aria-label="menu"
+                        onClick={() => (setOpen(true))}
+                        >
+                    <MenuIcon />
+                </IconButton>
+                <div>
+                    <IconButton
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={handleClose}
+                    >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>My Account</MenuItem>
+                    </Menu>
+                </div>
+                <Button color="inherit" onClick={handleLogOut} data-toggle="modal" data-target="#logoutModal" id="logoutBtn">Logout</Button>
+            </Toolbar>
     );
+
     return (
-        <nav className="navbar navbar-expand-lg">
-            <div className="collapse navbar-collapse d-flex justify-content-end" id="navbar1">
+        <div className={classes.root}>
+            <AppBar position="static">
                 {state.isAuthenticated ? userLink : loginRegLink}
-            </div>
-        </nav>
+            </AppBar>
+            <Sidebar 
+                open={drawerOpen}
+                toggleClose={() => (setOpen(false))}/>
+        </div>
     );
 }
-
-export default Navbar;
