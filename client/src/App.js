@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Navbar from './components/Navbar/Navbar';
 import Landing from './pages/Landing/Landing';
@@ -17,6 +18,7 @@ import './App.css';
 function App() {
     return (
         <AppContextProvider>
+            <CssBaseline />
             <Router>
                 <div className="pl-0 pr-0 m-0 container-fluid">
                     <Navbar />
