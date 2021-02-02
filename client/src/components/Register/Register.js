@@ -96,13 +96,13 @@ export default function Register() {
                         history.push('/login');
                     });
                     console.log('Form submitted');
+                    console.log(userData);
                 } else {
                     errors['email'] = 'Email already exists';
                     setRegisterState({ ...registerState, errors });
                 }
             });
         } else {
-          console.log(userData);
             console.log('Form has errors.');
         }
     };
