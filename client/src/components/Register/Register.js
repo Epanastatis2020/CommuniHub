@@ -2,9 +2,61 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { registerUser, getUsers } from '../../utils/userFunctions';
 import { checkFormFields } from './checkFormFields';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-function Register(props) {
-    const history = useHistory();
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        CommuniHub
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+const WhiteTextTypography = withStyles({
+    root: {
+      color: "#FFFFFF"
+    }
+  })(Typography);
+
+export default function Register() {
+  const classes = useStyles();
+
+  const history = useHistory();
 
     const [registerState, setRegisterState] = useState({
         first_name: '',
@@ -50,76 +102,99 @@ function Register(props) {
                 }
             });
         } else {
+          console.log(userData);
             console.log('Form has errors.');
         }
     };
 
-    return (
-        <div className="container">
-            <div className="row">
-                <div className="mx-auto mt-5 col-md-6">
-                    <form noValidate onSubmit={onSubmit}>
-                        <h1 className="mb-3 h3 font-weight normal">Please Sign in</h1>
-                        <div className="form-group">
-                            <label htmlFor="first_name">First Name</label>
-                            <input
-                                type="text"
-                                refs="first_name"
-                                className="form-control"
-                                name="first_name"
-                                placeholder="Enter First Name"
-                                value={registerState.first_name}
-                                onChange={onChange}
-                            />
-                            <span style={{ color: 'red' }}>{registerState.errors['first_name']}</span>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="last_name">Last Name</label>
-                            <input
-                                type="text"
-                                refs="last_name"
-                                className="form-control"
-                                name="last_name"
-                                placeholder="Enter Last Name"
-                                value={registerState.last_name}
-                                onChange={onChange}
-                            />
-                            <span style={{ color: 'red' }}>{registerState.errors['last_name']}</span>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email Address</label>
-                            <input
-                                type="email"
-                                refs="email"
-                                className="form-control"
-                                name="email"
-                                placeholder="Enter Email"
-                                value={registerState.email}
-                                onChange={onChange}
-                            />
-                            <span style={{ color: 'red' }}>{registerState.errors['email']}</span>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                refs="password"
-                                className="form-control"
-                                name="password"
-                                placeholder="Enter Password"
-                                value={registerState.password}
-                                onChange={onChange}
-                            />
-                            <span style={{ color: 'red' }}>{registerState.errors['password']}</span>
-                        </div>
-                        <button type="submit" className="btn btn-lg btn-primary btn-block">
-                            Register
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <WhiteTextTypography component="h1" variant="h5">
+          Sign up
+        </WhiteTextTypography>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="fname"
+                autoFocus
+                fullWidth
+                id="firstName"
+                label="First Name"
+                name="first_name"
+                onChange={onChange}
+                required
+                value={registerState.first_name}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="lname"
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="last_name"
+                onChange={onChange}
+                required
+                value={registerState.last_name}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="email"
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                onChange={onChange}
+                required
+                value={registerState.email}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="current-password"
+                fullWidth
+                id="password"
+                label="Password"
+                name="password"
+                onChange={onChange}
+                required
+                type="password"
+                value={registerState.password}
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="/login" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
 }
-
-export default Register;
