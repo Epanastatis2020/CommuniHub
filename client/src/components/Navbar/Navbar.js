@@ -96,8 +96,8 @@ export default function Navbar() {
                         open={open}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My Account</MenuItem>
+                        <MenuItem component={Link} to="/profile" onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>Inbox</MenuItem>
                     </Menu>
                 </div>
                 <Button color="inherit" onClick={handleLogOut} data-toggle="modal" data-target="#logoutModal" id="logoutBtn">Logout</Button>
