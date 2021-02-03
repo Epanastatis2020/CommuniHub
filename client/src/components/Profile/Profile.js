@@ -47,15 +47,15 @@ export default function Profile() {
 
     const [authState, appDispatch] = useAppContext();
 
+    const avatarName = `${authState.user.first_name} ${authState.user.last_name}`;
+
     useLoginCheck(appDispatch);
 
     return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
+                <Avatar alt={avatarName} src="/broken-image.jpg" className={classes.blue} />
                 <WhiteTextTypography component="h1" variant="h5">
                     Profile
                 </WhiteTextTypography>
