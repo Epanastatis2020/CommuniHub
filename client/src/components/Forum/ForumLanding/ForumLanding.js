@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Header from './Header';
 import MainFeaturedThread from '../MainFeaturedThread/MainFeaturedThread';
 import FeaturedThread from '../FeaturedThread/FeaturedThread';
 import Main from './Main';
@@ -88,7 +87,6 @@ export default function Blog() {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Blog" sections={sections} />
         <main>
           <MainFeaturedThread post={mainFeaturedThread} />
           <Grid container spacing={4}>
