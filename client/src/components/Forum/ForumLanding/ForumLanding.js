@@ -8,28 +8,15 @@ import FeaturedThread from '../FeaturedThread/FeaturedThread';
 import Main from './Main';
 import QuickLinks from '../QuickLinks/QuickLinks';
 import Footer from '../../Footer/Footer';
-import post1 from './blog-post.1.md';
-import post2 from './blog-post.2.md';
-import post3 from './blog-post.3.md';
+import post1 from './post1.md';
+import post2 from './post2.md';
+import post3 from './post3.md';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
   },
 }));
-
-const sections = [
-  { title: 'Technology', url: '#' },
-  { title: 'Design', url: '#' },
-  { title: 'Culture', url: '#' },
-  { title: 'Business', url: '#' },
-  { title: 'Politics', url: '#' },
-  { title: 'Opinion', url: '#' },
-  { title: 'Science', url: '#' },
-  { title: 'Health', url: '#' },
-  { title: 'Style', url: '#' },
-  { title: 'Travel', url: '#' },
-];
 
 const mainFeaturedThread = {
   title: 'Title of a longer featured blog post',
@@ -80,7 +67,7 @@ const quicklinks = {
   ],
 };
 
-export default function Blog() {
+export default function ForumLanding() {
   const classes = useStyles();
 
   return (
