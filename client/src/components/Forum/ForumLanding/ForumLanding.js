@@ -7,7 +7,7 @@ import Header from './Header';
 import MainFeaturedThread from '../MainFeaturedThread/MainFeaturedThread';
 import FeaturedThread from '../FeaturedThread/FeaturedThread';
 import Main from './Main';
-import QuickLinks from './QuickLinks';
+import QuickLinks from '../QuickLinks/QuickLinks';
 import Footer from '../../Footer/Footer';
 import post1 from './blog-post.1.md';
 import post2 from './blog-post.2.md';
