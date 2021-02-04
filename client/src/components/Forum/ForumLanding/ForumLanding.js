@@ -4,8 +4,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Header from './Header';
-import MainFeaturedPost from './MainFeaturedPost';
-import FeaturedPost from './FeaturedPost';
+import MainFeaturedThread from '../MainFeaturedThread/MainFeaturedThread';
+import FeaturedThread from '../FeaturedThread/FeaturedThread';
 import Main from './Main';
 import QuickLinks from './QuickLinks';
 import Footer from '../../Footer/Footer';
@@ -32,7 +32,7 @@ const sections = [
   { title: 'Travel', url: '#' },
 ];
 
-const mainFeaturedPost = {
+const mainFeaturedThread = {
   title: 'Title of a longer featured blog post',
   description:
     "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
@@ -90,10 +90,10 @@ export default function Blog() {
       <Container maxWidth="lg">
         <Header title="Blog" sections={sections} />
         <main>
-          <MainFeaturedPost post={mainFeaturedPost} />
+          <MainFeaturedThread post={mainFeaturedThread} />
           <Grid container spacing={4}>
             {featuredPosts.map((post) => (
-              <FeaturedPost key={post.title} post={post} />
+              <FeaturedThread key={post.title} post={post} />
             ))}
           </Grid>
           <Grid container spacing={5} className={classes.mainGrid}>
