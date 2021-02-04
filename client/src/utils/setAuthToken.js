@@ -15,7 +15,6 @@ export const setAuthToken = (token) => {
     }
 };
 
-
 export const useLoginCheck = (dispatch) => {
     useEffect(() => {
         const token = localStorage.getItem('userToken');
