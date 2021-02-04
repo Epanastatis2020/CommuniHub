@@ -69,6 +69,7 @@ const quicklinks = {
 
 export default function ForumLanding() {
   const classes = useStyles();
+  console.log("ForumLanding is rendered");
 
   return (
     <React.Fragment>

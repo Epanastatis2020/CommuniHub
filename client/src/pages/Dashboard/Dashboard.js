@@ -8,6 +8,8 @@ function DashBoard() {
 
     useLoginCheck(appDispatch);
 
+    console.log("Dashboard is rendered");
+
     return (
         <ForumLanding />
     );

@@ -13,7 +13,7 @@ const getToken = () => {
 
 
 export const appInitialState = {
-    isAuthenticated: false,
+    isAuthenticated: true,
     user: getToken(),
     loading: false,
     errors: {}
