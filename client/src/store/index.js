@@ -10,7 +10,6 @@ const { Provider } = AppContext;
 
 export const AppContextProvider = ({ children, ...props }) => {
     const [appState, appDispatch] = useReducer(appReducer, appInitialState);
-
     return (
         <Provider
             value={[appState, appDispatch]}
