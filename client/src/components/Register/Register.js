@@ -88,7 +88,6 @@ export default function Register() {
         };
         if (registerState.formIsValid) {
             getUsers().then((data) => {
-                console.log(data);
                 var alreadyRegisteredUser = data
                     .find((element) => element.email === registerState.email)
                 if (!alreadyRegisteredUser) {
@@ -96,7 +95,6 @@ export default function Register() {
                         history.push('/login');
                     });
                     console.log('Form submitted');
-                    console.log(userData);
                 } else {
                     errors['email'] = 'Email already exists';
                     setRegisterState({ ...registerState, errors });
