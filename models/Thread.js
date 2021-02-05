@@ -12,7 +12,6 @@ const ThreadSchema = new Schema({
     },
     isSticky: {
         type: Boolean,
-        required: true,
     },
     forum_id: {
         type: Schema.Types.ObjectId,

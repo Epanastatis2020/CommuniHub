@@ -11,10 +11,10 @@ const Thread = require('../../models/Thread');
 router.use(cors());
 
 router.post('/api/thread', (req, res) => {
-    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
-    const currentUserId = User.findOne({
-        _id: decoded._id,
-    });
+    // var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
+    // const currentUserId = User.findOne({
+    //     _id: decoded._id,
+    // });
 
     const threadData = {
         title: req.body.title,
@@ -22,7 +22,6 @@ router.post('/api/thread', (req, res) => {
         forum_id: req.body.forum_id,
         // user_id: currentUserId,
         user_id: req.body.user_id,
-        is_sticky: false,
     };
 
     Thread.create(threadData)
@@ -69,7 +68,7 @@ router.put('/api/thread/:id', (req, res) => {
         title: req.body.title,
         content: req.body.content,
         forum_id: req.body.forum_id,
-        is_sticky: false;
+        is_sticky: req.body.is_sticky,
     };
 
     Thread.findOneAndUpdate({ _id: req.params.id }, threadData, { new: true, upsert: true })

@@ -11,10 +11,10 @@ const Post = require('../../models/Post');
 router.use(cors());
 
 router.post('/api/post', (req, res) => {
-    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
-    const currentUserId = User.findOne({
-        _id: decoded._id,
-    });
+    // var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
+    // const currentUserId = User.findOne({
+    //     _id: decoded._id,
+    // });
 
     const postData = {
         content: req.body.content,
