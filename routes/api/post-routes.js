@@ -65,15 +65,9 @@ router.get('/api/post/:postId', (req, res) => {
 });
 
 router.put('/api/post/:id', (req, res) => {
-    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
-    const currentUserId = User.findOne({
-        _id: decoded._id,
-    });
     const postData = {
         content: req.body.content,
         thread_id: req.body.thread_id,
-        // user_id: currentUserId,
-        user_id: req.body.user_id,
         upvotes: req.body.upvotes,
         downvotes: req.body.downvotes,
     };
