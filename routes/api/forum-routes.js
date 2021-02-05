@@ -12,6 +12,7 @@ const Forum = require('../../models/Forum');
 router.use(cors());
 
 router.post('/api/forum', (req, res) => {
+    console.log(res);
     const forumData = {
         forum_name: req.body.forum_name,
     };
