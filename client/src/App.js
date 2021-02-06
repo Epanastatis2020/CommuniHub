@@ -9,8 +9,10 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AppContextProvider } from './store';
-//import Auth from './private-route/PrivateRoute'
-import Auth from './hoc/Auth';
+
+// NOTE TO SELF - below Auth methods not working
+// import Auth from './global/private-route/PrivateRoute';
+// import Auth from './hoc/Auth';
 
 import './App.css';
 
