@@ -108,7 +108,7 @@ const WhiteTextTypography = withStyles({
                 </WhiteTextTypography>
                     <form className={classes.form} noValidate onSubmit={onSubmit}>
                         <Grid container spacing={4}>
-                        <Grid item xs={6} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
                               autoComplete="name"
                               fullWidth
@@ -123,6 +123,7 @@ const WhiteTextTypography = withStyles({
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                            fullWidth
                             id="name"
                             label="Email"
                             defaultValue={user.email}

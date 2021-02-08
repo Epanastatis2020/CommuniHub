@@ -37,12 +37,13 @@ export default function Navbar() {
     const { state, dispatch } = useContext(Context);
     const { user } = state;
 
-    const handleLogout = async () => {
+    const handleLogout = async (e) => {
+        e.preventDefault();
         await firebase.auth().signOut();
         dispatch({
           type: "LOGOUT",
         });
-        history.push("/login");
+        history.push("/");
       };
 
     const handleMenu = (event) => {

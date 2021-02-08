@@ -87,7 +87,7 @@ export default function Register() {
         console.log("starting the try catch")
         const user = await firebase.auth().createUserWithEmailAndPassword(registerState.email, registerState.password);
             console.log("REGISTER USER =======> ", user);
-            history.push("/login");
+            history.push("/profile");
       } catch (err) {
         console.log("REGISTER REQUEST ERROR =======> ", err);
         toast.dark(err.message, {
