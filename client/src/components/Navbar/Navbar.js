@@ -39,11 +39,11 @@ export default function Navbar() {
 
     const handleLogout = async (e) => {
         e.preventDefault();
+        history.push("/");
         await firebase.auth().signOut();
         dispatch({
           type: "LOGOUT",
         });
-        history.push("/");
       };
 
     const handleMenu = (event) => {
