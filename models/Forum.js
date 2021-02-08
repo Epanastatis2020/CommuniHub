@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -11,4 +11,4 @@ const ForumSchema = new Schema({
 
 const Forum = mongoose.model('forums', ForumSchema);
 
-module.exports = Forum;
+export default Forum;

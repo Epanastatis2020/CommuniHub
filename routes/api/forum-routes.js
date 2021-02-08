@@ -1,14 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-
+import cors from 'cors';
+import dotenv from 'dotenv';
 dotenv.config();
 
 // Load Forum model
-const Forum = require('../../models/Forum');
+
+import Forum from '../../models/Forum.js';
+
 router.use(cors());
 
 router.post('/api/forum', (req, res) => {
@@ -85,4 +84,4 @@ router.delete('/api/forum/:forumId', (req, res) => {
         });
 });
 
-module.exports = router;
+export default router;

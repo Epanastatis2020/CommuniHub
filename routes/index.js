@@ -1,12 +1,15 @@
-const path = require('path');
-const router = require('express').Router();
-const apiUserRoutes = require('./api/user-routes');
-const apiForumRoutes = require('./api/forum-routes');
-const apiThreadRoutes = require('./api/thread-routes');
-const apiPostRoutes = require('./api/post-routes');
+import { currentUser, privateRoute } from '../controllers/auth.js';
+import { findOrCreateUser } from '../middleware/index.js';
+import path from 'path';
+import express from 'express';
+const router = express.Router();
+import apiForumRoutes from './api/forum-routes.js';
+import apiThreadRoutes from './api/thread-routes.js';
+import apiPostRoutes from './api/post-routes.js';
 
 // API Routes
-router.use(apiUserRoutes);
+router.post('/current-user', findOrCreateUser, currentUser);
+router.get('/private-route', findOrCreateUser, privateRoute);
 router.use(apiForumRoutes);
 router.use(apiThreadRoutes);
 router.use(apiPostRoutes);
@@ -16,4 +19,4 @@ router.use(function (req, res) {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-module.exports = router;
+export default router;

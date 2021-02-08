@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useAppContext } from '../../store';
-import { useLoginCheck, logout } from '../../utils/setAuthToken';
+import { Context } from '../../context';
+import firebase from '../../firebase';
+
+//mUI imports
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -27,20 +29,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Navbar() {
-    const history = useHistory();
-    const [state, dispatch] = useAppContext();
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const [drawerOpen, setOpen] = React.useState(false);
+    const history = useHistory();
+    const { state, dispatch } = useContext(Context);
+    const { user } = state;
 
-    useLoginCheck(dispatch);
-
-    const handleLogOut = (e) => {
-        e.preventDefault();
-        logout(dispatch);
-        history.push('/');
-    };
+    const handleLogout = async () => {
+        await firebase.auth().signOut();
+        dispatch({
+          type: "LOGOUT",
+        });
+        history.push("/login");
+      };
 
     const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -100,14 +103,14 @@ export default function Navbar() {
                         <MenuItem onClick={handleClose}>Inbox</MenuItem>
                     </Menu>
                 </div>
-                <Button color="inherit" onClick={handleLogOut} data-toggle="modal" data-target="#logoutModal" id="logoutBtn">Logout</Button>
+                <Button color="inherit" onClick={handleLogout} data-toggle="modal" data-target="#logoutModal" id="logoutBtn">Logout</Button>
             </Toolbar>
     );
 
     return (
         <div className={classes.root}>
             <AppBar position="static">
-                {state.isAuthenticated ? userLink : loginRegLink}
+                {user ? userLink : loginRegLink}
             </AppBar>
             <Sidebar 
                 open={drawerOpen}
