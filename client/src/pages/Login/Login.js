@@ -99,7 +99,7 @@ export default function Login() {
     })
     .catch((err) => {
       console.log(err);
-      toast(err.message);
+      toast.dark(err.message);
       setLoading(false);
     });
 };
