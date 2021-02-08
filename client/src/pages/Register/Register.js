@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { registerUser, getUsers } from '../../utils/userFunctions';
-import { checkFormFields } from './checkFormFields';
+import firebase from "../../firebase";
+import { toast } from "react-toastify";
+
+//mUI imports
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Copyright() {
   return (
@@ -45,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
 }));
 
 const WhiteTextTypography = withStyles({
@@ -59,50 +68,58 @@ export default function Register() {
   const history = useHistory();
 
     const [registerState, setRegisterState] = useState({
-        first_name: '',
-        last_name: '',
         email: '',
         password: '',
         errors: {},
-        formIsValid: true,
     });
 
-    const handleValidation = () => {
-        const [errors, formIsValid] = checkFormFields(registerState);
-        setRegisterState({ ...registerState, errors, formIsValid });
-    };
+    const [loading, setLoading] = useState(false); 
 
     const onChange = (event) => {
         setRegisterState({ ...registerState, [event.target.name]: event.target.value });
     };
 
-    const onSubmit = (event) => {
-        let errors = {};
-        handleValidation();
-        event.preventDefault();
-        const userData = {
-            first_name: registerState.first_name,
-            last_name: registerState.last_name,
-            email: registerState.email,
-            password: registerState.password,
-        };
-        if (registerState.formIsValid) {
-            getUsers().then((data) => {
-                var alreadyRegisteredUser = data
-                    .find((element) => element.email === registerState.email)
-                if (!alreadyRegisteredUser) {
-                    registerUser(userData).then((res) => {
-                        history.push('/login');
-                    });
-                    console.log('Form submitted');
-                } else {
-                    errors['email'] = 'Email already exists';
-                    setRegisterState({ ...registerState, errors });
-                }
-            });
-        } else {
-            console.log('Form has errors.');
-        }
+    const onSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      console.log("REGISTER STATE =======> ", registerState.email);
+      try {
+        console.log("starting the try catch")
+        const user = await firebase.auth().createUserWithEmailAndPassword(registerState.email, registerState.password);
+            console.log("REGISTER USER =======> ", user);
+            history.push("/profile");
+      } catch (err) {
+        console.log("REGISTER REQUEST ERROR =======> ", err);
+        toast.dark(err.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+        setLoading(false);
+      }
+    };
+
+    const SubmitBtn = () => {
+      return (
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+      >
+        Sign Up
+      </Button>)
+    };
+
+    const LoadingBtn = () => {
+      return (
+        <CircularProgress />
+      )
     };
 
   return (
@@ -117,33 +134,6 @@ export default function Register() {
         </WhiteTextTypography>
         <form className={classes.form} noValidate onSubmit={onSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                autoFocus
-                fullWidth
-                id="firstName"
-                label="First Name"
-                name="first_name"
-                onChange={onChange}
-                required
-                value={registerState.first_name}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="lname"
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="last_name"
-                onChange={onChange}
-                required
-                value={registerState.last_name}
-                variant="outlined"
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 autoComplete="email"
@@ -172,15 +162,7 @@ export default function Register() {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
+          {loading ? <LoadingBtn /> : <SubmitBtn />}
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">

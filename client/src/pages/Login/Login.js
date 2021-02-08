@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { GET_ERRORS, SET_CURRENT_USER } from '../../services/actions/types';
-import { useAppContext } from '../../store';
-import { loginUser } from '../../utils/userFunctions';
-import { setAuthToken } from '../../utils/setAuthToken';
 import { useHistory } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import firebase from "../../firebase";
+import { toast } from "react-toastify";
+// mUI imports
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function Copyright() {
   return (
@@ -35,6 +34,10 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    }
   },
   image: {
     backgroundImage: '../../assets/images/Communihub.PNG',
@@ -72,12 +75,12 @@ export default function Login() {
 
   const history = useHistory();
 
+  const [loading, setLoading] = useState(false);
+
   const [formState, setFormState] = useState({
       email: '',
       password: '',
   });
-
-  const [, appDispatch ] = useAppContext();
 
   const onChange = (e) => {
       setFormState({
@@ -87,28 +90,38 @@ export default function Login() {
   };
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      const user = {
-          email: formState.email,
-          password: formState.password,
-      };
-      try {
-          const response = await loginUser(user);
-          // Set token to localStorage
-          const token = response.data;
-          // Set token to Auth header
-          setAuthToken(token);
-          // Decode token to get user data
-          const decodedToken = jwt_decode(token);
-          // Set current user
-          appDispatch({ type: SET_CURRENT_USER, payload: decodedToken });
-          history.push('/dashboard');
-      } catch (error) {
-          appDispatch({
-              type: GET_ERRORS,
-              payload: error,
-          });
-      }
+    e.preventDefault();
+    setLoading(true);
+    await firebase.auth().signInWithEmailAndPassword(formState.email, formState.password)
+    .then((user) => {
+      console.log("LOGIN", user);
+      history.push("/dashboard");
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.dark(err.message);
+      setLoading(false);
+    });
+};
+
+  const SubmitBtn = () => {
+    return (
+      <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      color="primary"
+      className={classes.submit}
+    >
+      Sign In
+    </Button>
+    )
+  };
+
+  const LoadingBtn = () => {
+    return (
+      <CircularProgress />
+    )
   };
 
   return (
@@ -154,15 +167,7 @@ export default function Login() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
+            {loading ? <LoadingBtn /> : <SubmitBtn />}
             <Grid container>
               <Grid item>
                 <Link href="/register" variant="body2">
@@ -178,4 +183,4 @@ export default function Login() {
       </Grid>
     </Grid>
   );
-}
+};

@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema({
+const PostSchema = new Schema(
+    {
     content: {
         type: String,
         required: true,
@@ -18,12 +19,16 @@ const PostSchema = new Schema({
     },
     upvotes: {
         type: Number,
+        default: 0
     },
     downvotes: {
         type: Number,
+        default: 0
     },
-});
+    },
+    { timestamps: true }
+);
 
 const Post = mongoose.model('posts', PostSchema);
 
-module.exports = Post;
+export default Post;

@@ -1,18 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-const logger = require('morgan');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const routes = require('./routes');
-const passport = require('passport');
+import express from 'express';
+import cors from 'cors';
+import logger from 'morgan';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import routes from './routes/index.js';
 const app = express();
-const dotenv = require('dotenv');
-
+import dotenv from 'dotenv';
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
 
-// Define middleware here
+// Middleware
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -43,12 +41,6 @@ mongoose
     })
     .then(() => console.log('MongoDB successfully connected'))
     .catch((err) => console.log(err));
-
-// Passport middleware
-app.use(passport.initialize());
-
-// Passport config
-require('./config/passport')(passport);
 
 // Routes
 app.use(routes);
