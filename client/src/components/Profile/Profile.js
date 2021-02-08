@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Context } from '../../context';
 import firebase from '../../firebase';
 import { toast } from "react-toastify";
@@ -48,12 +49,13 @@ const WhiteTextTypography = withStyles({
 
   export default function Profile() {
     const classes = useStyles();
+    const history = useHistory();
     
     const { state, dispatch } = useContext(Context);
     let { user } = state;
 
     if (user === null) {
-      user = sessionStorage.getItem("currentUser");
+      user = JSON.parse(sessionStorage.getItem("currentUser"));
     };
 
     const [loading, setLoading] = useState(false); 
@@ -98,44 +100,48 @@ const WhiteTextTypography = withStyles({
       )
     }
 
-    return (
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                <Avatar alt={name} src="/broken-image.jpg" className={classes.blue} />
-                <WhiteTextTypography component="h1" variant="h5">
-                    Profile
-                </WhiteTextTypography>
-                    <form className={classes.form} noValidate onSubmit={onSubmit}>
-                        <Grid container spacing={4}>
-                        <Grid item xs={12}>
-                            <TextField
-                              autoComplete="name"
+    if (!user) {
+      return history.push("/")
+    } else {
+      return (
+              <Container component="main" maxWidth="xs">
+                  <CssBaseline />
+                  <div className={classes.paper}>
+                  <Avatar alt={name} src="/broken-image.jpg" className={classes.blue} />
+                  <WhiteTextTypography component="h1" variant="h5">
+                      Profile
+                  </WhiteTextTypography>
+                      <form className={classes.form} noValidate onSubmit={onSubmit}>
+                          <Grid container spacing={4}>
+                          <Grid item xs={12}>
+                              <TextField
+                                autoComplete="name"
+                                fullWidth
+                                id="name"
+                                label="name"
+                                name="name"
+                                onChange={onChange}
+                                required
+                                value={name}
+                                variant="outlined"
+                              />
+                          </Grid>
+                          <Grid item xs={12}>
+                              <TextField
                               fullWidth
                               id="name"
-                              label="name"
-                              name="name"
-                              onChange={onChange}
-                              required
-                              value={name}
-                              variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                            fullWidth
-                            id="name"
-                            label="Email"
-                            defaultValue={user.email}
-                            InputProps={{
-                              readOnly: true,
-                            }}
-                            />
-                        </Grid>
-                        {loading ? <LoadingBtn /> : <SubmitBtn />}
-                        </Grid>
-                    </form>
-                </div>
-            </Container>
-    );
+                              label="Email"
+                              defaultValue={user.email}
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                              />
+                          </Grid>
+                          {loading ? <LoadingBtn /> : <SubmitBtn />}
+                          </Grid>
+                      </form>
+                  </div>
+              </Container>
+      );
+    }
 }
