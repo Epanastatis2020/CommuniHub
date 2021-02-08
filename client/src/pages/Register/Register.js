@@ -79,29 +79,28 @@ export default function Register() {
         setRegisterState({ ...registerState, [event.target.name]: event.target.value });
     };
 
-    const onSubmit = async () => {
+    const onSubmit = async (e) => {
+      e.preventDefault();
       setLoading(true);
-      // console.log("REGISTER STATE =======>", registerState);
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(registerState.email, registerState.password)
-        .then((user) => {
-          console.log("REGISTER", user);
-          history.push("/");
-        })
-        .catch((err) => {
-          //console.log(err);
-          toast.dark(err.message, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
-          setLoading(false);
-        });
+      console.log("REGISTER STATE =======> ", registerState.email);
+      try {
+        console.log("starting the try catch")
+        const user = await firebase.auth().createUserWithEmailAndPassword(registerState.email, registerState.password);
+            console.log("REGISTER USER =======> ", user);
+            history.push("/login");
+      } catch (err) {
+        console.log("REGISTER REQUEST ERROR =======> ", err);
+        toast.dark(err.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+        setLoading(false);
+      }
     };
 
     const SubmitBtn = () => {
@@ -115,14 +114,13 @@ export default function Register() {
       >
         Sign Up
       </Button>)
-    }
+    };
 
     const LoadingBtn = () => {
       return (
         <CircularProgress />
       )
-    }
-
+    };
 
   return (
     <Container component="main" maxWidth="xs">

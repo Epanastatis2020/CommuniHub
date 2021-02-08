@@ -50,30 +50,36 @@ const WhiteTextTypography = withStyles({
     const classes = useStyles();
     
     const { state, dispatch } = useContext(Context);
-    const { user } = state;
+    let { user } = state;
+
+    if (user === null) {
+      user = sessionStorage.getItem("currentUser");
+    };
 
     const [loading, setLoading] = useState(false); 
-    const [name, setName] = useState(user.name)
+    const [name, setName] = useState(user ? user.name : "")
 
     const onChange = (event) => {
       setName(event.target.value);
     };
 
-    const onSubmit = async () => {
+    const onSubmit = async (e) => {
+      e.preventDefault();
       setLoading(true);
       const currentUser = firebase.auth().currentUser;
+      console.log("USER OBJECT =======> ", currentUser);
       currentUser.updateProfile({
-        displayName: user.name,
+        displayName: name,
       }).then(function() {
-        toast("Name successfully updated")
+        toast.dark("Name successfully updated")
         setLoading(false)
       }).catch(function(error) {
-        toast(error)
+        toast.dark(error)
         setLoading(false)
       });
     };
 
-    const submitBtn = () => {
+    const SubmitBtn = () => {
       return (
       <Button
         type="submit"
@@ -86,7 +92,7 @@ const WhiteTextTypography = withStyles({
       </Button>)
     }
 
-    const loadingBtn = () => {
+    const LoadingBtn = () => {
       return (
         <CircularProgress />
       )
@@ -96,7 +102,7 @@ const WhiteTextTypography = withStyles({
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
-                <Avatar alt={user.name} src="/broken-image.jpg" className={classes.blue} />
+                <Avatar alt={name} src="/broken-image.jpg" className={classes.blue} />
                 <WhiteTextTypography component="h1" variant="h5">
                     Profile
                 </WhiteTextTypography>
@@ -111,21 +117,21 @@ const WhiteTextTypography = withStyles({
                               name="name"
                               onChange={onChange}
                               required
-                              value={user.name}
+                              value={name}
                               variant="outlined"
                             />
                         </Grid>
-                        {loading ? loadingBtn : submitBtn}
                         <Grid item xs={12}>
                             <TextField
                             id="name"
                             label="Email"
                             defaultValue={user.email}
                             InputProps={{
-                                readOnly: true,
+                              readOnly: true,
                             }}
                             />
                         </Grid>
+                        {loading ? <LoadingBtn /> : <SubmitBtn />}
                         </Grid>
                     </form>
                 </div>

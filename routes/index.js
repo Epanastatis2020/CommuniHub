@@ -2,14 +2,15 @@ import { currentUser, privateRoute } from '../controllers/auth.js';
 import { findOrCreateUser } from '../middleware/index.js';
 import path from 'path';
 import express from 'express';
-const router = express.Router();
 import apiForumRoutes from './api/forum-routes.js';
 import apiThreadRoutes from './api/thread-routes.js';
 import apiPostRoutes from './api/post-routes.js';
+const router = express.Router();
+const __dirname = path.resolve();
 
 // API Routes
-router.post('/current-user', findOrCreateUser, currentUser);
-router.get('/private-route', findOrCreateUser, privateRoute);
+router.post('/api/current-user', findOrCreateUser, currentUser);
+router.get('/api/private-route', findOrCreateUser, privateRoute);
 router.use(apiForumRoutes);
 router.use(apiThreadRoutes);
 router.use(apiPostRoutes);

@@ -89,17 +89,16 @@ export default function Login() {
       });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    await firebase
-    .auth()
-    .signInWithEmailAndPassword(formState.email, formState.password)
+    await firebase.auth().signInWithEmailAndPassword(formState.email, formState.password)
     .then((user) => {
-      //console.log("LOGIN", user);
-      history.push("/profile");
+      console.log("LOGIN", user);
+      history.push("/dashboard");
     })
     .catch((err) => {
-      //console.log(err);
+      console.log(err);
       toast(err.message);
       setLoading(false);
     });
