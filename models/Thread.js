@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const ThreadSchema = new Schema({
+const ThreadSchema = new Schema(
+    {
     title: {
         type: String,
         required: true,
@@ -12,6 +13,7 @@ const ThreadSchema = new Schema({
     },
     isSticky: {
         type: Boolean,
+        default: false,
     },
     forum_id: {
         type: Schema.Types.ObjectId,
@@ -21,7 +23,9 @@ const ThreadSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-});
+    },
+    { timestamps: true }
+);
 
 const Thread = mongoose.model('threads', ThreadSchema);
 
