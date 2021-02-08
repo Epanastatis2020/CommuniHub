@@ -21,7 +21,8 @@ const FirebaseAuthState = ({ children }) => {
         // set token to cookie
         removeCookie('token');
         setCookie('token', token, {});
-        sessionStorage.setItem("currentUser", user);
+        const currentUser = JSON.stringify(user)
+        sessionStorage.setItem("currentUser", currentUser);
         // console.log("TOKEN", token);
         // send this token to backend
         // backend will check if thie token is valid (using firebase admin tool)
