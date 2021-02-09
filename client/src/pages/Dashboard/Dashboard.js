@@ -1,5 +1,5 @@
 import React from 'react';
-import ForumLanding from '../../components/Forum/ForumLanding/ForumLanding';
+import ForumLanding from '../../containers/Forum/ForumLanding/ForumLanding';
 
 const DashBoard = () => {
     
