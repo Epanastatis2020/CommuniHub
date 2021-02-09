@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Context } from '../../context';
 import firebase from '../../firebase';
 import { toast } from "react-toastify";
@@ -49,7 +48,6 @@ const WhiteTextTypography = withStyles({
 
   export default function Profile() {
     const classes = useStyles();
-    const history = useHistory();
     
     const { state, dispatch } = useContext(Context);
     let { user } = state;
