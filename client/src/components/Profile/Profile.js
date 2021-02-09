@@ -100,10 +100,7 @@ const WhiteTextTypography = withStyles({
       )
     }
 
-    if (!user) {
-      return history.push("/")
-    } else {
-      return (
+    return (
               <Container component="main" maxWidth="xs">
                   <CssBaseline />
                   <div className={classes.paper}>
@@ -143,5 +140,4 @@ const WhiteTextTypography = withStyles({
                   </div>
               </Container>
       );
-    }
 }
