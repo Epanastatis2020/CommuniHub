@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosAuth } from './actions/axios';
 
 // get the current user's ID
 
@@ -9,7 +9,7 @@ const getUserId = () => {
 // add a post
 
 export const addPost = postData => {
-    return axios
+    return axiosAuth
     .post('/api/post', {
         content: postData.content,
         thread_id: postData.thread_id,
@@ -19,7 +19,7 @@ export const addPost = postData => {
 
 //get all the posts from the DB
 export const getPosts = () => {
-    return axios
+    return axiosAuth
     .get('/api/post', {
     })
     .then(response => {
@@ -32,7 +32,7 @@ export const getPosts = () => {
 
 //get a specific post from the DB
 export const getPost = (postID) => {
-    return axios
+    return axiosAuth
     .get('/api/post/' + postID, {
     })
     .then(response => {
@@ -45,7 +45,7 @@ export const getPost = (postID) => {
 
 // delete a post from the DB
 export const deletePost = postID => {
-    return axios
+    return axiosAuth
     .delete("/api/post/" + postID, {
     })
     .then(response => {
@@ -59,7 +59,7 @@ export const deletePost = postID => {
 // updating a post name
 
 export const updatePost = postData => {
-    return axios
+    return axiosAuth
     .put("/api/post/" + postData._id, {
         content: postData.content,
         thread_id: postData.thread_id,
