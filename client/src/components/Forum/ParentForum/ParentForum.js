@@ -6,15 +6,16 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
-  mainFeaturedThread: {
+  parentForum: {
     position: 'relative',
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage: 'url(https://source.unsplash.com/collection/490)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
+    height: 500,
   },
   overlay: {
     position: 'absolute',
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     backgroundColor: 'rgba(0,0,0,.3)',
   },
-  mainFeaturedThreadContent: {
+  parentForumContent: {
     position: 'relative',
     padding: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
@@ -39,7 +40,7 @@ export default function ParentForum(props) {
   const { post } = props;
 
   return (
-    <Paper className={classes.parentForum} style={{ backgroundImage: `url(${post.image})` }}>
+    <Paper className={classes.parentForum} style={{ backgroundImage: `(${post.image})` }}>
       {/* Increase the priority of the hero background image */}
       {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
       <div className={classes.overlay} />

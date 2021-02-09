@@ -22,13 +22,11 @@ const latestAnnouncement = {
   postContent: 'Just a reminder that this forum is still under construction and not all functionality is present or working'
 };
 
-const featuredPosts = {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
+const featuredPost = {
+  title: 'Ali Shaikh',
+  dateStamp: 'Feb 09, 2021',
+  postLink: '#',
+  postContent: 'Wow I cannot believe how quickly this forum is coming together. Anyone else?'
 };
 
 export default function ForumLanding() {
@@ -42,11 +40,11 @@ export default function ForumLanding() {
             <Grid item xs={12}>
               <ParentForum post={parentForum} />
             </Grid>
-            <Grid item xs={12} s={6}>
+            <Grid item xs={6} s={6}>
               <LatestAnnouncement post={latestAnnouncement} />
             </Grid>
-            <Grid item xs={12} s={6}>
-              <FeaturedPost post={featuredPosts} />
+            <Grid item xs={6} s={6}>
+              <FeaturedPost post={featuredPost} />
             </Grid>
           </Grid>
         </main>
