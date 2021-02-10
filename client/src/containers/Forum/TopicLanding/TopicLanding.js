@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { getThreads } from '../../../services/ThreadService';
 import { getSpecificPosts } from '../../../services/PostService';
 
@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
+import { TextField } from '@material-ui/core';
 
 import ParentForum from '../../../components/Forum/ParentForum/ParentForum';
 import Pagination from '../../../components/Pagination/Pagination';
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const TopicLanding = (props) => {
+
+    const [replyMode, SetReplyMode] = useState(false)
+    const [replyValue, SetReplyValue] = useState();
 
     const classes = useStyles();    
 
@@ -72,23 +76,43 @@ const TopicLanding = (props) => {
     }
 ];
 
-    // const [postData, SetPostData] = useState(posts);
-
     const parentForum = {
         title: topicData.title,
         image: 'https://rimh2.domainstatic.com.au/ATaM9ZUwi9t_p-g4UKcB9xslqi0=/fit-in/1920x1080/filters:format(jpeg):quality(80):no_upscale()/http://b.domainstatic.com.au.s3-website-ap-southeast-2.amazonaws.com/6e367c5b-353d-4583-b65a-6af2af82a4d8-w1440-h1200',
         imgText: topicData.title,
     };
 
-    // const PostComponents = (data) => {
-    //     data.forEach((post) => {
-    //         return  <Grid item xs={12}>
-    //                     <Post postProp={post} />
-    //                 </Grid>
-    //     })
-    // };
+    const updateReplyValue = useCallback(({ target: { value }}) => {
+      SetReplyValue(value);
+    }, []);
 
-    // console.log(PostComponents);
+    const handlePostSubmit = async() => {
+      // API call here to create the POST request
+      SetReplyMode(false)
+    }
+
+    const replyBtnHandler = () => {
+      replyMode? handlePostSubmit() : SetReplyMode(true)
+    };
+
+    const postReplySection = (
+      <Grid item xs={12} >
+        <TextField
+          id="content-label"
+          label="Your Reply"
+          style={{ margin: 8 }}
+          placeholder="Write your reply here..."
+          value={replyValue}
+          onChange={updateReplyValue}
+          fullWidth
+          multiline
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      </Grid>
+    );
 
     return (
     <React.Fragment>
@@ -104,12 +128,19 @@ const TopicLanding = (props) => {
                 <Pagination />
               </Grid>
               <Grid item xs={3} >
-                <Button className={classes.button} size="medium" variant="contained" color="primary">Reply</Button>
+                <Button 
+                  onClick={replyBtnHandler} 
+                  className={classes.button} 
+                  size="medium" 
+                  variant="contained" 
+                  color="primary">
+                {replyMode? "Post" : "Reply"}</Button>
               </Grid>
               <Grid item xs={12}>
                 <TopicStarter topic={topicData}/>
               </Grid>
-              {posts.map(post => (
+              {replyMode? postReplySection :
+              posts.map(post => (
                   <Grid item xs={12}>
                     <Post 
                         author={post.author} 
