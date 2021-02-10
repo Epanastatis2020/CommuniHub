@@ -70,10 +70,6 @@ export default function ForumLanding() {
   //     _id: "string"
   // }]
 
-  // const newData = useMemo(() => {
-  //   return topics?.map(async topic => [<Link href="#" color="inherit">{topic.title}</Link>, topic.content, await getPostsForThread(topic._id), topic.updatedAt]);
-  // }, [topics]);
-
   return (
     <React.Fragment>
       <CssBaseline />
