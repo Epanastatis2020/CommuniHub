@@ -30,7 +30,6 @@ const FirebaseAuthState = ({ children }) => {
         // then can either save this user in database or update the existing user
         // then send the user information back to client
         axiosAuth.post("/current-user", {}).then((res) => {
-          console.log("RES =====> ", res);
           dispatch({
             type: "LOGIN",
             payload: res.data,

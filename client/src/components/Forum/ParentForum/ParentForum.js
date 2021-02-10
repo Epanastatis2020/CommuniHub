@@ -40,7 +40,7 @@ export default function ParentForum(props) {
   const { post } = props;
 
   return (
-    <Paper className={classes.parentForum} style={{ backgroundImage: `(${post.image})` }}>
+    <Paper className={classes.parentForum} style={{ backgroundImage: `url(${post.image})` }}>
       {/* Increase the priority of the hero background image */}
       {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
       <div className={classes.overlay} />
