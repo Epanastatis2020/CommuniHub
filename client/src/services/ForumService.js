@@ -4,7 +4,7 @@ import { axiosAuth } from './actions/axios';
 
 export const addForum = forumData => {
     return axiosAuth
-    .post('/api/forum', {
+    .post('/forum', {
         forum_name: forumData.forum_name,
     })
 }
@@ -12,7 +12,7 @@ export const addForum = forumData => {
 //get all the forums in the DB
 export const getForumList = () => {
     return axiosAuth
-    .get('/api/forum', {
+    .get('/forum', {
     })
     .then(response => {
         return response.data
@@ -23,9 +23,9 @@ export const getForumList = () => {
 }
 
 // delete a forum from the DB
-export const deleteForum = forumID => {
+export const deleteForum = forumId => {
     return axiosAuth
-    .delete("/api/forum/" + forumID, {
+    .delete("/forum/" + forumId, {
     })
     .then(response => {
         return response.data
@@ -39,7 +39,7 @@ export const deleteForum = forumID => {
 
 export const updateForum = forumData => {
     return axiosAuth
-    .put("/api/forum/" + forumData._id, {
+    .put("/forum/" + forumData._id, {
         forum_name: forumData.forum_name,
     })
     .then(response => {

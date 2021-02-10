@@ -10,7 +10,7 @@ const getUserId = () => {
 
 export const addThread = threadData => {
     return axiosAuth
-    .post('/api/thread', {
+    .post('/thread', {
         title: threadData.title,
         content: threadData.content,
         forum_id: threadData.forum_id,
@@ -21,7 +21,7 @@ export const addThread = threadData => {
 //get all the threads from the DB
 export const getThreads = () => {
     return axiosAuth
-    .get('/api/thread', {
+    .get('/thread', {
     })
     .then(response => {
         return response.data
@@ -34,7 +34,7 @@ export const getThreads = () => {
 //get a specific thread from the DB
 export const getThread = (threadID) => {
     return axiosAuth
-    .get('/api/thread/' + threadID, {
+    .get('/thread/' + threadID, {
     })
     .then(response => {
         return response.data
@@ -47,7 +47,7 @@ export const getThread = (threadID) => {
 // delete a thread from the DB
 export const deleteThread = threadID => {
     return axiosAuth
-    .delete("/api/thread/" + threadID, {
+    .delete("/thread/" + threadID, {
     })
     .then(response => {
         return response.data
@@ -61,7 +61,7 @@ export const deleteThread = threadID => {
 
 export const updateThread = threadData => {
     return axiosAuth
-    .put("/api/thread/" + threadData._id, {
+    .put("/thread/" + threadData._id, {
         title: threadData.title,
         content: threadData.content,
         forum_id: threadData.forum_id,

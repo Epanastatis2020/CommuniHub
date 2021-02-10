@@ -10,7 +10,7 @@ const getUserId = () => {
 
 export const addPost = postData => {
     return axiosAuth
-    .post('/api/post', {
+    .post('/post', {
         content: postData.content,
         thread_id: postData.thread_id,
         user_id: getUserId(),
@@ -20,7 +20,7 @@ export const addPost = postData => {
 //get all the posts from the DB
 export const getPosts = () => {
     return axiosAuth
-    .get('/api/post', {
+    .get('/post', {
     })
     .then(response => {
         return response.data
@@ -33,7 +33,7 @@ export const getPosts = () => {
 //get a specific post from the DB
 export const getPost = (postID) => {
     return axiosAuth
-    .get('/api/post/' + postID, {
+    .get('/post/' + postID, {
     })
     .then(response => {
         return response.data
@@ -46,7 +46,7 @@ export const getPost = (postID) => {
 // delete a post from the DB
 export const deletePost = postID => {
     return axiosAuth
-    .delete("/api/post/" + postID, {
+    .delete("/post/" + postID, {
     })
     .then(response => {
         return response.data
@@ -60,7 +60,7 @@ export const deletePost = postID => {
 
 export const updatePost = postData => {
     return axiosAuth
-    .put("/api/post/" + postData._id, {
+    .put("/post/" + postData._id, {
         content: postData.content,
         thread_id: postData.thread_id,
         upvotes: postData.upvotes,
