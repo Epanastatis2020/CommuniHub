@@ -50,7 +50,7 @@ export default function ForumLanding() {
       const newData = [];
       res.forEach(async (topic) => {
         const preparePostsForThread = await getPostsForThread(topic._id)
-        newData.push([<Link href="#" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
+        newData.push([<Link href="/topic" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
       })
       setTopics(newData);
       setLoading(false);
