@@ -40,21 +40,22 @@ class TopicTable extends React.Component {
         },
        ];
 
-    const data = [
-      [<Link href="#" color="inherit">Announcements</Link>, "This topic is solely for announcements", 1, "today"],
-      ["Aiden Lloyd", "Business Consultant", 55, "$200,000"],
-      ["Jaden Collins", "Attorney", 27, "$500,000"],
-      ["Franky Rees", "Business Analyst", 22, "$50,000"],
-      ["Aaren Rose", "Business Consultant", 28, "$75,000"],
-      ["Frankie Parry", "Agency Legal Counsel", 71, "$210,000"],
-      ["Lane Wilson", "Commercial Specialist", 19, "$65,000"],
-      ["Robin Duncan", "Business Analyst", 20, "$77,000"],
-      ["Mel Brooks", "Business Consultant", 37, "$135,000"],
-      ["Harper White", "Attorney", 52, "$420,000"],
-      ["Kris Humphrey", "Agency Legal Counsel", 30, "$150,000"],
-      ["Frankie Long", "Industrial Analyst", 31, "$170,000"],
-      ["Brynn Robbins", "Business Analyst", 22, "$90,000"],
-    ];
+    //PLACEHOLDER DATA FOR WHEN NOT USING API FOR TOPIC RECORDS
+    // const data = [
+    //   [<Link href="#" color="inherit">Announcements</Link>, "This topic is solely for announcements", 1, "today"],
+    //   ["Aiden Lloyd", "Business Consultant", 55, "$200,000"],
+    //   ["Jaden Collins", "Attorney", 27, "$500,000"],
+    //   ["Franky Rees", "Business Analyst", 22, "$50,000"],
+    //   ["Aaren Rose", "Business Consultant", 28, "$75,000"],
+    //   ["Frankie Parry", "Agency Legal Counsel", 71, "$210,000"],
+    //   ["Lane Wilson", "Commercial Specialist", 19, "$65,000"],
+    //   ["Robin Duncan", "Business Analyst", 20, "$77,000"],
+    //   ["Mel Brooks", "Business Consultant", 37, "$135,000"],
+    //   ["Harper White", "Attorney", 52, "$420,000"],
+    //   ["Kris Humphrey", "Agency Legal Counsel", 30, "$150,000"],
+    //   ["Frankie Long", "Industrial Analyst", 31, "$170,000"],
+    //   ["Brynn Robbins", "Business Analyst", 22, "$90,000"],
+    // ];
 
     const topicData = this.props.topicData;
 
@@ -70,9 +71,7 @@ class TopicTable extends React.Component {
     //     _id: "string"
     // }]
 
-    const newData = []
-
-    console.log(topicData.map(topic => newData.push(<Link href="#" color="inherit">${topic.title}</Link>, topic.content, topic.isSticky, topic.updatedAt)));
+    const newData = topicData.map(topic => [<Link href="#" color="inherit">{topic.title}</Link>, topic.content, topic.isSticky, topic.updatedAt]);
 
     // console.log(data);
 
@@ -95,7 +94,7 @@ class TopicTable extends React.Component {
     return (
       <MUIDataTable
         title={<div><Button variant="contained" color="primary">NEW TOPIC</Button></div>}
-        data={data}
+        data={newData}
         columns={columns}
         options={options}
       />
