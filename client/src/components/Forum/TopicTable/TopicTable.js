@@ -72,14 +72,14 @@ class TopicTable extends React.Component {
         rowsPerPage: 10,
     };
 
-    const tableData = this.props.data;
+    let tableData = this.props.data;
 
     console.log("THIS IS THE TABLE DATA", tableData)
 
     return (
       this.props.data.length > 0 && <MUIDataTable
         title={<div><Button variant="contained" color="primary">NEW TOPIC</Button></div>}
-        data={tableData}
+        data={this.props.data}
         columns={columns}
         options={options}
       />
