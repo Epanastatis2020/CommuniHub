@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosAuth } from './actions/axios';
 
 // get the current user's ID
 
@@ -9,8 +9,8 @@ const getUserId = () => {
 // add a thread
 
 export const addThread = threadData => {
-    return axios
-    .post('/api/thread', {
+    return axiosAuth
+    .post('/thread', {
         title: threadData.title,
         content: threadData.content,
         forum_id: threadData.forum_id,
@@ -20,8 +20,8 @@ export const addThread = threadData => {
 
 //get all the threads from the DB
 export const getThreads = () => {
-    return axios
-    .get('/api/thread', {
+    return axiosAuth
+    .get('/thread', {
     })
     .then(response => {
         return response.data
@@ -33,8 +33,8 @@ export const getThreads = () => {
 
 //get a specific thread from the DB
 export const getThread = (threadID) => {
-    return axios
-    .get('/api/thread/' + threadID, {
+    return axiosAuth
+    .get('/thread/' + threadID, {
     })
     .then(response => {
         return response.data
@@ -46,8 +46,8 @@ export const getThread = (threadID) => {
 
 // delete a thread from the DB
 export const deleteThread = threadID => {
-    return axios
-    .delete("/api/thread/" + threadID, {
+    return axiosAuth
+    .delete("/thread/" + threadID, {
     })
     .then(response => {
         return response.data
@@ -60,8 +60,8 @@ export const deleteThread = threadID => {
 // updating a thread name
 
 export const updateThread = threadData => {
-    return axios
-    .put("/api/thread/" + threadData._id, {
+    return axiosAuth
+    .put("/thread/" + threadData._id, {
         title: threadData.title,
         content: threadData.content,
         forum_id: threadData.forum_id,
