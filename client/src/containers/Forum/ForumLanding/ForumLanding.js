@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getThreads } from '../../../services/ThreadService';
 import { getSpecificPosts } from '../../../services/PostService';
 
