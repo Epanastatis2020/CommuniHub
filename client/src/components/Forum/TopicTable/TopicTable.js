@@ -72,7 +72,7 @@ class TopicTable extends React.Component {
         rowsPerPage: 10,
     };
 
-    const tableData = this.props.data;
+    let tableData = this.props.data
 
     console.log("THIS IS THE TABLE DATA", tableData)
 
