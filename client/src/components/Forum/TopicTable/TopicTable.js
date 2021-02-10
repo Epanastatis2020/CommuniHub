@@ -1,6 +1,8 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+import { array } from "prop-types";
 
 class TopicTable extends React.Component {
   render() {
@@ -39,7 +41,7 @@ class TopicTable extends React.Component {
        ];
 
     const data = [
-      ["Gabby George", "Business Analyst", 30, "$100,000"],
+      [<Link href="#" color="inherit">Announcements</Link>, "This topic is solely for announcements", 1, "today"],
       ["Aiden Lloyd", "Business Consultant", 55, "$200,000"],
       ["Jaden Collins", "Attorney", 27, "$500,000"],
       ["Franky Rees", "Business Analyst", 22, "$50,000"],
@@ -54,19 +56,40 @@ class TopicTable extends React.Component {
       ["Brynn Robbins", "Business Analyst", 22, "$90,000"],
     ];
 
+    const topicData = this.props.topicData;
+
+    // Which looks like:
+    // topicData = [ { 
+    //     content: "string",
+    //     createdAt: "date",
+    //     forum_id: "string",
+    //     isSticky: "boolean",
+    //     title: "string",
+    //     updatedAt: "date",
+    //     user_id: "string",
+    //     _id: "string"
+    // }]
+
+    const newData = []
+
+    console.log(topicData.map(topic => newData.push(<Link href="#" color="inherit">${topic.title}</Link>, topic.content, topic.isSticky, topic.updatedAt)));
+
+    // console.log(data);
+
     const options = {
-      filterType: "dropdown",
-      responsive: "scroll",
-      download: "false",
-      filter: "false",
-      print: "false",
-      viewColumns: "false",
-      selectableRows: "none",
-      selectableRowsHideCheckboxes: "true",
-      sortOrder: {
-        name: "Last Reply",
-        direction: "asc",
-    },
+        filterType: "dropdown",
+        responsive: "simple",
+        download: "false",
+        filter: "false",
+        print: "false",
+        viewColumns: "false",
+        selectableRows: "none",
+        selectableRowsHideCheckboxes: "true",
+        sortOrder: {
+            name: "Last Reply",
+            direction: "asc",
+        },
+        rowsPerPage: 10,
     };
 
     return (
