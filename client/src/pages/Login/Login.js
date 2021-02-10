@@ -87,15 +87,12 @@ export default function Register() {
       e.preventDefault();
       setLoading(true);
       await firebase.auth().signInWithEmailAndPassword(formState.email, formState.password)
-      .then((user) => {
-        console.log("LOGIN", user);
-        history.push("/dashboard");
-      })
       .catch((err) => {
         console.log(err);
         toast.dark(err.message);
         setLoading(false);
       });
+      history.push("/dashboard");
   };
   
     const SubmitBtn = () => {
