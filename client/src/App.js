@@ -7,6 +7,7 @@ import Landing from './pages/Landing/Landing';
 import Register from './pages/Register/Register';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import ViewTopic from './pages/ViewTopic/ViewTopic';
 import Profile from './components/Profile/Profile';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from './context';
@@ -40,6 +41,7 @@ function App() {
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/profile" component={Auth(Profile)} />
                             <Route exact path="/dashboard" component={Auth(Dashboard)} />
+                            <Route exact path="/topic" component={Auth(ViewTopic)} />
                         </div>
                     </div>
                 </Router>

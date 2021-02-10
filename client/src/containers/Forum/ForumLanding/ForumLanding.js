@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { getThreads } from '../../../services/ThreadService';
+import { getSpecificPosts } from '../../../services/PostService';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
 
 import ParentForum from '../../../components/Forum/ParentForum/ParentForum';
 import FeaturedPost from '../../../components/Forum/FeaturedPost/FeaturedPost';
 import LatestAnnouncement from '../../../components/Forum/LatestAnnouncement/LatestAnnouncement';
 import TopicTable from '../../../components/Forum/TopicTable/TopicTable';
-import { STATES } from 'mongoose';
 
 const parentForum = {
   title: 'Midtown - 49-51 Denison St Wollongong',
@@ -31,23 +32,47 @@ const featuredPost = {
   postContent: 'Wow I cannot believe how quickly this forum is coming together. Anyone else?'
 };
 
-
-
 export default function ForumLanding() {
   
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    
+    const getPostsForThread = async (threadId) => {
+      const allPosts = await getSpecificPosts(threadId);
+      return allPosts.length;
+    }
+
     const fetchTopics = async () => {
       setLoading(true);
       const res = await getThreads();
-      setTopics(res);
+      const newData = [];
+      res.forEach(async (topic) => {
+        const preparePostsForThread = await getPostsForThread(topic._id)
+        newData.push([<Link href="#" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
+      })
+      setTopics(newData);
       setLoading(false);
     }
-
     fetchTopics();
   }, []);
+
+  // Which looks like:
+  // topicData = [ { 
+  //     content: "string",
+  //     createdAt: "date",
+  //     forum_id: "string",
+  //     isSticky: "boolean",
+  //     title: "string",
+  //     updatedAt: "date",
+  //     user_id: "string",
+  //     _id: "string"
+  // }]
+
+  // const newData = useMemo(() => {
+  //   return topics?.map(async topic => [<Link href="#" color="inherit">{topic.title}</Link>, topic.content, await getPostsForThread(topic._id), topic.updatedAt]);
+  // }, [topics]);
 
   return (
     <React.Fragment>
@@ -66,7 +91,7 @@ export default function ForumLanding() {
               <FeaturedPost post={featuredPost} />
             </Grid>
             <Grid item xs={12}>
-              <TopicTable topicData={topics}/>
+              <TopicTable data={topics}/>
             </Grid>
           </Grid>
         </main>

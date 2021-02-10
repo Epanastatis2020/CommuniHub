@@ -1,10 +1,9 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import { array } from "prop-types";
 
 class TopicTable extends React.Component {
+  
   render() {
 
     const columns = [
@@ -57,24 +56,6 @@ class TopicTable extends React.Component {
     //   ["Brynn Robbins", "Business Analyst", 22, "$90,000"],
     // ];
 
-    const topicData = this.props.topicData;
-
-    // Which looks like:
-    // topicData = [ { 
-    //     content: "string",
-    //     createdAt: "date",
-    //     forum_id: "string",
-    //     isSticky: "boolean",
-    //     title: "string",
-    //     updatedAt: "date",
-    //     user_id: "string",
-    //     _id: "string"
-    // }]
-
-    const newData = topicData.map(topic => [<Link href="#" color="inherit">{topic.title}</Link>, topic.content, topic.isSticky, topic.updatedAt]);
-
-    // console.log(data);
-
     const options = {
         filterType: "dropdown",
         responsive: "simple",
@@ -91,10 +72,14 @@ class TopicTable extends React.Component {
         rowsPerPage: 10,
     };
 
+    const tableData = this.props.data;
+
+    console.log("THIS IS THE TABLE DATA", tableData)
+
     return (
-      <MUIDataTable
+      this.props.data.length > 0 && <MUIDataTable
         title={<div><Button variant="contained" color="primary">NEW TOPIC</Button></div>}
-        data={newData}
+        data={tableData}
         columns={columns}
         options={options}
       />

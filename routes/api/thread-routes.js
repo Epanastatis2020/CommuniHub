@@ -8,11 +8,9 @@ dotenv.config();
 import Thread from '../../models/Thread.js';
 router.use(cors());
 
+
+// Create a thread/topic
 router.post('/api/thread', (req, res) => {
-    // var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
-    // const currentUserId = User.findOne({
-    //     _id: decoded._id,
-    // });
 
     const threadData = {
         title: req.body.title,
@@ -31,6 +29,7 @@ router.post('/api/thread', (req, res) => {
         });
 });
 
+//Get all threads/topics
 router.get('/api/thread', (req, res) => {
     Thread.find()
         .then((response) => {
@@ -45,6 +44,7 @@ router.get('/api/thread', (req, res) => {
         });
 });
 
+//Get a specific thread/topic
 router.get('/api/thread/:threadId', (req, res) => {
     Thread.findOne({
         _id: req.params.threadId,
@@ -61,6 +61,7 @@ router.get('/api/thread/:threadId', (req, res) => {
         });
 });
 
+//Update a thread/topic
 router.put('/api/thread/:id', (req, res) => {
     const threadData = {
         title: req.body.title,
@@ -80,6 +81,7 @@ router.put('/api/thread/:id', (req, res) => {
         });
 });
 
+//Delete a thread/topic
 router.delete('/api/thread/:threadId', (req, res) => {
     Thread.findByIdAndDelete(req.params.threadId)
         .then((response) => {
