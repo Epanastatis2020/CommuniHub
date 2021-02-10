@@ -30,6 +30,19 @@ export const getPosts = () => {
     })
 }
 
+//get all posts from a specific thread/topic
+export const getSpecificPosts = (threadId) => {
+    return axiosAuth
+    .get('/posts/' + threadId, {
+    })
+    .then(response => {
+        return response.data
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
+
 //get a specific post from the DB
 export const getPost = (postID) => {
     return axiosAuth

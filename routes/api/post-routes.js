@@ -8,11 +8,9 @@ dotenv.config();
 import Post from '../../models/Post.js';
 router.use(cors());
 
+
+// Create a post
 router.post('/api/post', (req, res) => {
-    // var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY);
-    // const currentUserId = User.findOne({
-    //     _id: decoded._id,
-    // });
 
     const postData = {
         content: req.body.content,
@@ -32,6 +30,7 @@ router.post('/api/post', (req, res) => {
         });
 });
 
+// Get all posts
 router.get('/api/post', (req, res) => {
     Post.find()
         .then((response) => {
@@ -46,6 +45,24 @@ router.get('/api/post', (req, res) => {
         });
 });
 
+//Get all posts from a specific thread/topic
+router.get('/api/posts/:threadId', (req, res) => {
+    Post.find({
+        thread_id: req.params.threadId,
+    })
+        .then((response) => {
+            if (response) {
+                res.json(response);
+            } else {
+                res.status(400).json({ error: 'post does not exist' });
+            }
+        })
+        .catch((err) => {
+            res.send('error: ' + err);
+        });
+});
+
+//Get a specific post
 router.get('/api/post/:postId', (req, res) => {
     Post.findOne({
         _id: req.params.postId,
@@ -62,6 +79,7 @@ router.get('/api/post/:postId', (req, res) => {
         });
 });
 
+//Update a post
 router.put('/api/post/:id', (req, res) => {
     const postData = {
         content: req.body.content,
@@ -81,6 +99,7 @@ router.put('/api/post/:id', (req, res) => {
         });
 });
 
+//Delete a post
 router.delete('/api/post/:postId', (req, res) => {
     Post.findByIdAndDelete(req.params.postId)
         .then((response) => {

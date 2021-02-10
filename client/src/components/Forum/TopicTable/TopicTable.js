@@ -2,7 +2,7 @@ import React from "react";
 import MUIDataTable from "mui-datatables";
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
-import { array } from "prop-types";
+import { getSpecificPosts } from '../../../services/PostService';
 
 class TopicTable extends React.Component {
   render() {
@@ -59,6 +59,15 @@ class TopicTable extends React.Component {
 
     const topicData = this.props.topicData;
 
+    const getPostsForThread = (threadId) => {
+        const allPosts = getSpecificPosts(threadId);
+        return allPosts.length;
+    }
+
+    const testGetPostsForThread = topicData.map(topic => [getPostsForThread(topic._id)]);
+
+    console.log("TEST GETPOSTSFORTHREAD =======>", testGetPostsForThread);
+
     // Which looks like:
     // topicData = [ { 
     //     content: "string",
@@ -71,9 +80,7 @@ class TopicTable extends React.Component {
     //     _id: "string"
     // }]
 
-    const newData = topicData.map(topic => [<Link href="#" color="inherit">{topic.title}</Link>, topic.content, topic.isSticky, topic.updatedAt]);
-
-    // console.log(data);
+    const newData = topicData.map(topic => [<Link href="#" color="inherit">{topic.title}</Link>, topic.content, getPostsForThread(topic._id), topic.updatedAt]);
 
     const options = {
         filterType: "dropdown",
