@@ -89,7 +89,7 @@ const TopicLanding = (props) => {
     const handlePostSubmit = async() => {
       let payload = {
         content: replyValue,
-        // thread_id: 
+        thread_id: props.thread_id
       }
       addPost(payload)
       SetReplyMode(false)
