@@ -23,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Post(props) {
   const classes = useStyles();
 
-  console.log(props);
-
   return (
     <Card className={classes.root}>
       <CardHeader
