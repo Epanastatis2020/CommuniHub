@@ -24,9 +24,9 @@ export default function TopicStarter(props) {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-            <Avatar alt={topic.author} className={classes.blue} />
+            <Avatar alt={topic.title} className={classes.blue} />
           }
-        title={topic.author}
+        title={topic.title}
         subheader={topic.createdAt}
       />
       <CardContent>
