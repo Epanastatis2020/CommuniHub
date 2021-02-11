@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { getThreads } from '../../../services/ThreadService';
-import { addPosts, getSpecificPosts } from '../../../services/PostService';
+import { addPost, getSpecificPosts } from '../../../services/PostService';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -91,7 +91,7 @@ const TopicLanding = (props) => {
         content: replyValue,
         // thread_id: 
       }
-      addPosts(payload)
+      addPost(payload)
       SetReplyMode(false)
     }
 
