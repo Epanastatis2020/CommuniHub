@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Auth from './hoc/private-route';
+import AuthenticatedRoute from './hoc/private-route';
 
 import Navbar from './components/Navbar/Navbar';
 import Landing from './pages/Landing/Landing';
@@ -39,9 +39,9 @@ function App() {
                         <div className="p-0 m-0 container-fluid">
                             <Route exact path="/register" component={Register} />
                             <Route exact path="/login" component={Login} />
-                            <Route exact path="/profile" component={Auth(Profile)} />
-                            <Route exact path="/dashboard" component={Auth(Dashboard)} />
-                            <Route exact path="/topic/:id" component={Auth(ViewTopic)} />
+                            <AuthenticatedRoute exact path="/profile" component={Profile} />
+                            <AuthenticatedRoute exact path="/dashboard" component={Dashboard} />
+                            <AuthenticatedRoute exact path="/topic/:id" component={ViewTopic} />
                         </div>
                     </div>
                 </Router>
