@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
+import TimeAgo from 'timeago-react';
+
 import ParentForum from '../../../components/Forum/ParentForum/ParentForum';
 import FeaturedPost from '../../../components/Forum/FeaturedPost/FeaturedPost';
 import LatestAnnouncement from '../../../components/Forum/LatestAnnouncement/LatestAnnouncement';
@@ -55,7 +57,8 @@ export default function ForumLanding() {
       // })
       for (let i = 0; i < res.length; i++) {
         const preparePostsForThread = await getPostsForThread(res[i]._id)
-        newData.push([<Link href="/topic" color="inherit">{res[i].title}</Link>, res[i].content, preparePostsForThread, res.updatedAt])
+        let threadID = "/topic/" + res[i]._id;
+        newData.push([<Link href={threadID} color="inherit">{res[i].title}</Link>, res[i].content, preparePostsForThread, <TimeAgo datetime={res[i].updatedAt} />])
       }
       setTopics(newData);
       setLoading(false);
