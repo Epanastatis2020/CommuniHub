@@ -1,10 +1,6 @@
 import { axiosAuth } from './actions/axios';
+import { getCurrentUserId } from './UserService';
 
-// get the current user's ID
-
-const getUserId = () => {
-    //put function here
-}
 
 // add a thread
 
@@ -14,7 +10,7 @@ export const addThread = threadData => {
         title: threadData.title,
         content: threadData.content,
         forum_id: threadData.forum_id,
-        user_id: getUserId(),
+        user_id: getCurrentUserId(),
     })
 }
 
