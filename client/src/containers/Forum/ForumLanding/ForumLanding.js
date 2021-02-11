@@ -48,10 +48,15 @@ export default function ForumLanding() {
       setLoading(true);
       const res = await getThreads();
       const newData = [];
-      res.forEach(async (topic) => {
-        const preparePostsForThread = await getPostsForThread(topic._id)
-        newData.push([<Link href="/topic" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
-      })
+      // NOTE: forEach doesn't work here because forEach runs each "each" synchronously
+      // res.forEach(async (topic) => {
+      //   const preparePostsForThread = await getPostsForThread(topic._id)
+      //   newData.push([<Link href="/topic" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
+      // })
+      for (let i = 0; i < res.length; i++) {
+        const preparePostsForThread = await getPostsForThread(res[i]._id)
+        newData.push([<Link href="/topic" color="inherit">{res[i].title}</Link>, res[i].content, preparePostsForThread, res.updatedAt])
+      }
       setTopics(newData);
       setLoading(false);
     }
@@ -87,7 +92,7 @@ export default function ForumLanding() {
               <FeaturedPost post={featuredPost} />
             </Grid>
             <Grid item xs={12}>
-              <TopicTable data={topics}/>
+              <TopicTable key="topicTableComponent" data={topics}/>
             </Grid>
           </Grid>
         </main>

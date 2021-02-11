@@ -64,17 +64,13 @@ class TopicTable extends React.Component {
         print: "false",
         viewColumns: "false",
         selectableRows: "none",
-        selectableRowsHideCheckboxes: "true",
+        selectableRowsHideCheckboxes: true,
         sortOrder: {
             name: "Last Reply",
             direction: "asc",
         },
         rowsPerPage: 10,
     };
-
-    let tableData = this.props.data;
-
-    console.log("THIS IS THE TABLE DATA", tableData)
 
     return (
       this.props.data.length > 0 && <MUIDataTable
