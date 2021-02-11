@@ -5,6 +5,7 @@ import express from 'express';
 import apiForumRoutes from './api/forum-routes.js';
 import apiThreadRoutes from './api/thread-routes.js';
 import apiPostRoutes from './api/post-routes.js';
+import apiUserRoutes from './api/user-routes.js';
 const router = express.Router();
 const __dirname = path.resolve();
 
@@ -14,6 +15,7 @@ router.get('/api/private-route', findOrCreateUser, privateRoute);
 router.use(apiForumRoutes);
 router.use(apiThreadRoutes);
 router.use(apiPostRoutes);
+router.use(apiUserRoutes);
 
 // If no API routes are hit, send the React app
 router.use(function (req, res) {

@@ -7,6 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
+import TimeAgo from 'timeago-react';
+
 import ParentForum from '../../../components/Forum/ParentForum/ParentForum';
 import FeaturedPost from '../../../components/Forum/FeaturedPost/FeaturedPost';
 import LatestAnnouncement from '../../../components/Forum/LatestAnnouncement/LatestAnnouncement';
@@ -48,10 +50,16 @@ export default function ForumLanding() {
       setLoading(true);
       const res = await getThreads();
       const newData = [];
-      res.forEach(async (topic) => {
-        const preparePostsForThread = await getPostsForThread(topic._id)
-        newData.push([<Link href="/topic" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
-      })
+      // NOTE: forEach doesn't work here because forEach runs each "each" synchronously
+      // res.forEach(async (topic) => {
+      //   const preparePostsForThread = await getPostsForThread(topic._id)
+      //   newData.push([<Link href="/topic" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
+      // })
+      for (let i = 0; i < res.length; i++) {
+        const preparePostsForThread = await getPostsForThread(res[i]._id)
+        let threadID = "/topic/" + res[i]._id;
+        newData.push([<Link href={threadID} color="inherit">{res[i].title}</Link>, res[i].content, preparePostsForThread, <TimeAgo datetime={res[i].updatedAt} />])
+      }
       setTopics(newData);
       setLoading(false);
     }
@@ -87,7 +95,7 @@ export default function ForumLanding() {
               <FeaturedPost post={featuredPost} />
             </Grid>
             <Grid item xs={12}>
-              <TopicTable data={topics}/>
+              <TopicTable key="topicTableComponent" data={topics}/>
             </Grid>
           </Grid>
         </main>

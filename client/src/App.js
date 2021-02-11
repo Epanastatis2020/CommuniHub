@@ -41,7 +41,7 @@ function App() {
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/profile" component={Auth(Profile)} />
                             <Route exact path="/dashboard" component={Auth(Dashboard)} />
-                            <Route exact path="/topic" component={Auth(ViewTopic)} />
+                            <Route exact path="/topic/:id" component={Auth(ViewTopic)} />
                         </div>
                     </div>
                 </Router>

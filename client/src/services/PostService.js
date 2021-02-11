@@ -1,10 +1,5 @@
 import { axiosAuth } from './actions/axios';
-
-// get the current user's ID
-
-const getUserId = () => {
-    //put function here
-}
+import { getCurrentUserId } from './UserService';
 
 // add a post
 
@@ -13,7 +8,7 @@ export const addPost = postData => {
     .post('/post', {
         content: postData.content,
         thread_id: postData.thread_id,
-        user_id: getUserId(),
+        user_id: getCurrentUserId(),
     })
 }
 

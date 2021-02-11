@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { getThreads } from '../../../services/ThreadService';
-import { getSpecificPosts } from '../../../services/PostService';
+import { addPost, getSpecificPosts } from '../../../services/PostService';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -87,7 +87,11 @@ const TopicLanding = (props) => {
     }, []);
 
     const handlePostSubmit = async() => {
-      // API call here to create the POST request
+      let payload = {
+        content: replyValue,
+        thread_id: props.thread_id
+      }
+      addPost(payload)
       SetReplyMode(false)
     }
 
