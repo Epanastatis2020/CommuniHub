@@ -3,10 +3,10 @@ import cors from 'cors';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import routes from './routes/index.js';
 const app = express();
 import dotenv from 'dotenv';
 dotenv.config();
+import routes from './routes/index.js';
 
 const PORT = process.env.PORT || 5001;
 
