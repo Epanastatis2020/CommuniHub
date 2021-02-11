@@ -1,13 +1,16 @@
 import React from 'react';
-import Landing from '../pages/Landing/Landing';
+import { Redirect, Route } from 'react-router-dom';
 
-function Auth(ComposedComponent) {
+const AuthenticatedRoute = ({ component: Component, ...rest }) => {
     const user = JSON.parse(sessionStorage.getItem('currentUser'))
-    return function Authentication(props) {
-        return user
-            ? <ComposedComponent {...props} user={user} />
-            : <Landing />;
-    };
-}
+    return (
+        <Route {...rest} render={props => (
+            user
+                ? <Component {...props} user={user}/>
+                : <Redirect to="/" />
+        )} />
+    );
+};
 
-export default Auth;
+
+export default AuthenticatedRoute;
