@@ -62,22 +62,23 @@ const TopicLanding = (props) => {
           console.log(err);
           toast.dark(err);
         })
+        // console.log("CurrentUserID here", CurrentUserId)
         SetCurrentUser(CurrentUserId);
       };
   
       const fetchTopic = async () => {
         SetLoading(true);
-        console.log("THREAD ID BEING PASSED", props.thread_id)
+        // console.log("THREAD ID BEING PASSED", props.thread_id)
         const TopicDataArray = await getThread(props.thread_id)
-        console.log("TOPIC DATA ARRAY", TopicDataArray);
+        // console.log("TOPIC DATA ARRAY", TopicDataArray);
         const TopicData = JSON.stringify(TopicDataArray);
-        console.log("TOPIC DATA", TopicData)
+        // console.log("TOPIC DATA", TopicData)
         SetTopicData(TopicDataArray);
       };
 
       const fetchPosts = async () => {
         const postData = await getSpecificPosts(props.thread_id)
-        console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
+        // console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
         SetPosts(postData)
         SetLoading(false);
       };
@@ -97,7 +98,7 @@ const TopicLanding = (props) => {
       SetReplyValue(value);
     }, []);
 
-    const handlePostSubmit = async() => {
+    const handlePostSubmit = async(currentUser) => {
       SetLoading(true);
       let payload = {
         content: replyValue,
@@ -106,6 +107,7 @@ const TopicLanding = (props) => {
         downvotes: "0",
         upvotes: "0"
       }
+      console.log("HANDLEPOSTSUBMIT PAYLOAD", payload)
       await addPost(payload).catch((err) => {
         console.log(err);
         toast.dark(err.message);
@@ -115,7 +117,7 @@ const TopicLanding = (props) => {
     }
 
     const replyBtnHandler = () => {
-      replyMode? handlePostSubmit() : SetReplyMode(true);
+      replyMode? handlePostSubmit(currentUser) : SetReplyMode(true);
     };
 
     const postReplySection = (
