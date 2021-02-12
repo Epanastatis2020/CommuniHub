@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { getThread } from '../../../services/ThreadService';
 import { addPost, getSpecificPosts } from '../../../services/PostService';
+import {getCurrentUserId} from '../../../services/UserService';
+import { toast } from "react-toastify";
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import ParentForum from '../../../components/Forum/ParentForum/ParentForum';
 import Pagination from '../../../components/Pagination/Pagination';
@@ -48,10 +51,19 @@ const TopicLanding = (props) => {
     const [loading, SetLoading] = useState(false);
     const [topicData, SetTopicData] = useState(standInTopic);
     const [posts, SetPosts] = useState(standInPost);
+    const [currentUser, SetCurrentUser] = useState()
 
     const classes = useStyles();
     
     useEffect(() => {
+
+      const fetchCurrentUserID = async ()  => {
+        const CurrentUserId = await getCurrentUserId().catch((err) => {
+          console.log(err);
+          toast.dark(err);
+        })
+        SetCurrentUser(CurrentUserId);
+      };
   
       const fetchTopic = async () => {
         SetLoading(true);
@@ -70,6 +82,7 @@ const TopicLanding = (props) => {
         SetLoading(false);
       };
 
+      fetchCurrentUserID();
       fetchTopic();
       fetchPosts();
     }, []);
@@ -85,16 +98,24 @@ const TopicLanding = (props) => {
     }, []);
 
     const handlePostSubmit = async() => {
+      SetLoading(true);
       let payload = {
         content: replyValue,
-        thread_id: props.thread_id
+        thread_id: props.thread_id,
+        user_id: currentUser,
+        downvotes: "0",
+        upvotes: "0"
       }
-      addPost(payload)
-      SetReplyMode(false)
+      await addPost(payload).catch((err) => {
+        console.log(err);
+        toast.dark(err.message);
+      })
+      SetReplyMode(false);
+      SetLoading(false);
     }
 
     const replyBtnHandler = () => {
-      replyMode? handlePostSubmit() : SetReplyMode(true)
+      replyMode? handlePostSubmit() : SetReplyMode(true);
     };
 
     const postReplySection = (
@@ -130,13 +151,14 @@ const TopicLanding = (props) => {
                 <Pagination />
               </Grid>
               <Grid item xs={3} >
+                {loading ? <CircularProgress /> : 
                 <Button 
                   onClick={replyBtnHandler} 
                   className={classes.button} 
                   size="medium" 
                   variant="contained" 
                   color="primary">
-                {replyMode? "Post" : "Reply"}</Button>
+                {replyMode? "Post" : "Reply"}</Button>}
               </Grid>
               {!isEmpty(topicData)?  
               <Grid item xs={12}>
