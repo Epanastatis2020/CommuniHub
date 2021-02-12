@@ -78,7 +78,7 @@ const TopicLanding = (props) => {
 
       const fetchPosts = async () => {
         const postData = await getSpecificPosts(props.thread_id)
-        console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
+        // console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
         SetPosts(postData)
         SetLoading(false);
       };
