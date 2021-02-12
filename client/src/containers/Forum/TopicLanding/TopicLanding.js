@@ -71,14 +71,12 @@ const TopicLanding = (props) => {
         // console.log("THREAD ID BEING PASSED", props.thread_id)
         const TopicDataArray = await getThread(props.thread_id)
         // console.log("TOPIC DATA ARRAY", TopicDataArray);
-        const TopicData = JSON.stringify(TopicDataArray);
-        // console.log("TOPIC DATA", TopicData)
         SetTopicData(TopicDataArray);
       };
 
       const fetchPosts = async () => {
         const postData = await getSpecificPosts(props.thread_id)
-        // console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
+        console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
         SetPosts(postData)
         SetLoading(false);
       };
@@ -92,14 +90,6 @@ const TopicLanding = (props) => {
         title: topicData.title,
         image: 'https://rimh2.domainstatic.com.au/ATaM9ZUwi9t_p-g4UKcB9xslqi0=/fit-in/1920x1080/filters:format(jpeg):quality(80):no_upscale()/http://b.domainstatic.com.au.s3-website-ap-southeast-2.amazonaws.com/6e367c5b-353d-4583-b65a-6af2af82a4d8-w1440-h1200',
         imgText: topicData.title,
-    };
-
-    const fetchAuthor = async (user_id) => {
-      let userName = await getUserName(user_id).catch((err) => {
-        toast.dark(err);
-      });
-      console.log("FETCH AUTHOR", userName)
-      return userName;
     };
 
     const updateReplyValue = useCallback(({ target: { value }}) => {
