@@ -15,10 +15,9 @@ router.post('/api/post', (req, res) => {
     const postData = {
         content: req.body.content,
         thread_id: req.body.thread_id,
-        // user_id: currentUserId,
         user_id: req.body.user_id,
-        upvotes: 0,
-        downvotes: 0,
+        upvotes: req.body.upvotes,
+        downvotes: req.body.downvotes,
     };
 
     Post.create(postData)
