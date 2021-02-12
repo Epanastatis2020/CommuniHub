@@ -78,7 +78,7 @@ const TopicLanding = (props) => {
 
       const fetchPosts = async () => {
         const postData = await getSpecificPosts(props.thread_id)
-        // console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
+        console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
         SetPosts(postData)
         SetLoading(false);
       };
@@ -95,9 +95,11 @@ const TopicLanding = (props) => {
     };
 
     const fetchAuthor = async (user_id) => {
-      await getUserName(user_id).catch((err) => {
+      let userName = await getUserName(user_id).catch((err) => {
         toast.dark(err);
       });
+      console.log("FETCH AUTHOR", userName)
+      return userName;
     };
 
     const updateReplyValue = useCallback(({ target: { value }}) => {
@@ -113,7 +115,7 @@ const TopicLanding = (props) => {
         downvotes: "0",
         upvotes: "0"
       }
-      console.log("HANDLEPOSTSUBMIT PAYLOAD", payload)
+      // console.log("HANDLEPOSTSUBMIT PAYLOAD", payload)
       await addPost(payload).catch((err) => {
         console.log(err);
         toast.dark(err.message);
@@ -177,7 +179,7 @@ const TopicLanding = (props) => {
               posts.map(post => (
                   <Grid item xs={12} key={post._id}>
                     <Post 
-                        author={fetchAuthor(post.user_id)} 
+                        author={post.user_id.name}
                         createdAt={post.createdAt} 
                         content={post.content} 
                         upvotes={post.upvotes} 
@@ -185,7 +187,8 @@ const TopicLanding = (props) => {
                         key={post._id}
                     />
                   </Grid>
-              ))}
+                )
+              )}
             </Grid>
           </main>
         </Container>
