@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { getThread } from '../../../services/ThreadService';
 import { addPost, getSpecificPosts } from '../../../services/PostService';
-import {getCurrentUserId} from '../../../services/UserService';
+import { getCurrentUserId, getUserName } from '../../../services/UserService';
 import { toast } from "react-toastify";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -91,7 +91,13 @@ const TopicLanding = (props) => {
     const parentForum = {
         title: topicData.title,
         image: 'https://rimh2.domainstatic.com.au/ATaM9ZUwi9t_p-g4UKcB9xslqi0=/fit-in/1920x1080/filters:format(jpeg):quality(80):no_upscale()/http://b.domainstatic.com.au.s3-website-ap-southeast-2.amazonaws.com/6e367c5b-353d-4583-b65a-6af2af82a4d8-w1440-h1200',
-        imgText: "topicData.title",
+        imgText: topicData.title,
+    };
+
+    const fetchAuthor = async (user_id) => {
+      await getUserName(user_id).catch((err) => {
+        toast.dark(err);
+      });
     };
 
     const updateReplyValue = useCallback(({ target: { value }}) => {
@@ -114,6 +120,7 @@ const TopicLanding = (props) => {
       })
       SetReplyMode(false);
       SetLoading(false);
+      window.location.reload();
     }
 
     const replyBtnHandler = () => {
@@ -170,7 +177,7 @@ const TopicLanding = (props) => {
               posts.map(post => (
                   <Grid item xs={12} key={post._id}>
                     <Post 
-                        author="TEST FOR NOW" 
+                        author={fetchAuthor(post.user_id)} 
                         createdAt={post.createdAt} 
                         content={post.content} 
                         upvotes={post.upvotes} 
