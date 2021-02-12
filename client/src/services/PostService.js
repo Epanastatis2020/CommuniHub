@@ -1,14 +1,19 @@
 import { axiosAuth } from './actions/axios';
-import { getCurrentUserId } from './UserService';
+// import { getCurrentUserId } from './UserService';
 
 // add a post
 
 export const addPost = postData => {
+    console.log("THIS IS THE POST DATA FROM INSIDE POSTSERVICE", postData)
     return axiosAuth
     .post('/post', {
-        content: postData.content,
-        thread_id: postData.thread_id,
-        user_id: getCurrentUserId(),
+        // content: postData.content,
+        // thread_id: postData.thread_id,
+        // user_id: postData.user_id,
+        // upvotes: postData.upvotes,
+        // downvotes: postData.downvotes
+        // user_id: getCurrentUserId(),
+        ...postData
     })
 }
 
