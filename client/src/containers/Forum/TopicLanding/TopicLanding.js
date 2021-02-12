@@ -180,10 +180,12 @@ const TopicLanding = (props) => {
                   <Grid item xs={12} key={post._id}>
                     <Post 
                         author={post.user_id.name}
+                        // author="TEST"
                         createdAt={post.createdAt} 
                         content={post.content} 
                         upvotes={post.upvotes} 
                         downvotes={post.downvotes} 
+                        _id={post._id}
                         key={post._id}
                     />
                   </Grid>
