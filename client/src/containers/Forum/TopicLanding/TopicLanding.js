@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { getThread } from '../../../services/ThreadService';
 import { addPost, getSpecificPosts } from '../../../services/PostService';
-import { getCurrentUserId, getUserName } from '../../../services/UserService';
+import { getCurrentUserId } from '../../../services/UserService';
 import { toast } from "react-toastify";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,25 +26,6 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const TopicLanding = (props) => {
-
-    // const standInTopic = {
-    //   author: "user_id would go here if this worked",
-    //   title: "Test",
-    //   createdAt: "2021-02-08T09:37:54.510+00:00",
-    //   content: "This is the test data, it seems the API call hasn't been successful"
-    // }
-
-    // const standInPost = [
-    //   {
-    //     content: "This is a test post. It would appear the API call hasn't been successful",
-    //     _id: "093khfaskdfjasklf203",
-    //     author: "908908fsadkhfjsaldkfj",
-    //     createdAt: "2021-02-08T09:37:54.510+00:00",
-    //     updatedAt: "2021-02-08T11:50:10.510+00:00",
-    //     upvotes: 5,
-    //     downvotes: 0
-    //   },
-    // ]
 
     const [replyMode, SetReplyMode] = useState(false);
     const [replyValue, SetReplyValue] = useState();
