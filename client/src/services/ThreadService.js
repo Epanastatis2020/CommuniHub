@@ -9,8 +9,8 @@ export const addThread = threadData => {
     .post('/thread', {
         title: threadData.title,
         content: threadData.content,
-        forum_id: threadData.forum_id,
-        user_id: getCurrentUserId(),
+        forum_id: "602103b0764a2a3b3caa21a2",
+        user_id: threadData.user_id,
     })
 }
 

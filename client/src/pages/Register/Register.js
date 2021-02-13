@@ -82,14 +82,14 @@ export default function Register() {
     const onSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
-      console.log("REGISTER STATE =======> ", registerState.email);
+      // console.log("REGISTER STATE =======> ", registerState.email);
       try {
-        console.log("starting the try catch")
+        // console.log("starting the try catch")
         const user = await firebase.auth().createUserWithEmailAndPassword(registerState.email, registerState.password);
-            console.log("REGISTER USER =======> ", user);
+            // console.log("REGISTER USER =======> ", user);
             history.push("/profile");
       } catch (err) {
-        console.log("REGISTER REQUEST ERROR =======> ", err);
+        // console.log("REGISTER REQUEST ERROR =======> ", err);
         toast.dark(err.message, {
           position: "top-center",
           autoClose: 5000,
