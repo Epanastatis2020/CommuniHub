@@ -1,6 +1,8 @@
 import {React, useState} from 'react';
 import { updatePost } from '../../../services/PostService';
 
+import * as timeago from 'timeago.js';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -69,7 +71,7 @@ export default function Post(props) {
             <Avatar alt={props.author} className={classes.blue} />
           }
         title={props.author}
-        subheader={props.createdAt}
+        subheader={timeago.format(props.createdAt)}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
