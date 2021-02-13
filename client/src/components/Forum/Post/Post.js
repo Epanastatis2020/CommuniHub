@@ -42,7 +42,7 @@ export default function Post(props) {
       _id: props._id,
       content: props.content,
       thread_id: props.thread_id,
-      upvotes: upvotes,
+      upvotes: currentUpvotes + 1,
       downvotes: props.downvotes,
     }
     updatePost(postData)
@@ -59,7 +59,7 @@ export default function Post(props) {
       content: props.content,
       thread_id: props.thread_id,
       upvotes: props.upvotes,
-      downvotes: downvotes,
+      downvotes: currentDownvotes + 1,
     }
     updatePost(postData)
     SetLoading(false)    
