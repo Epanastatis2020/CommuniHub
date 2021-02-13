@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from "react-toastify";
+import { getCurrentUserId } from '../../services/UserService';
 
 import { addThread } from '../../services/ThreadService';
 
@@ -23,11 +24,26 @@ const useStyles = makeStyles((theme) => ({
 
 const NewTopic = (props) => {
 
+  useEffect(() => {
+
+    const fetchCurrentUserID = async ()  => {
+      const CurrentUserId = await getCurrentUserId().catch((err) => {
+        console.log(err);
+        toast.dark(err);
+      })
+      // console.log("CurrentUserID here", CurrentUserId)
+      SetCurrentUser(CurrentUserId);
+    };
+
+    fetchCurrentUserID();
+  }, []);
+
     const classes = useStyles();
 
     const history = useHistory();
 
     const [loading, SetLoading] = useState(false);
+    const [currentUser, SetCurrentUser] = useState()
     const [threadData, SetThreadData] = useState({
       title: '',
       content: '',
@@ -49,14 +65,16 @@ const NewTopic = (props) => {
     const onSubmit = async (e) => {
       e.preventDefault();
       SetLoading(true);
-      console.log("CREATE TOPIC THREAD DATA", threadData);
+      // console.log("CREATE TOPIC THREAD DATA", threadData);
       let payload = {
         title: threadData.title,
         content: threadData.content,
+        user_id: currentUser
       }
       try {
         const newThread = await addThread(payload)
-        const pushURL = "/topic/" + newThread._id
+        // console.log("NEW THREAD RESPONSE", newThread);
+        const pushURL = "/topic/" + newThread.data._id
         history.push(pushURL);
       } catch (err) {
         toast.dark(err);
