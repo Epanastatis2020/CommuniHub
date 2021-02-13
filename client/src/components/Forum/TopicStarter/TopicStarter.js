@@ -28,7 +28,7 @@ export default function TopicStarter(props) {
         avatar={
             <Avatar alt={topic.title} className={classes.blue} />
           }
-        title={topic.title}
+        title={topic.user_id.name}
         subheader={timeago.format(topic.createdAt)}
       />
       <CardContent>
