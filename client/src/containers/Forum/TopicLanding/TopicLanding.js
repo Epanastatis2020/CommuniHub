@@ -162,6 +162,7 @@ const TopicLanding = (props) => {
                         _id={post._id}
                         key={post._id}
                         thread_id={props.thread_id}
+                        user_id={post.user_id}
                     />
                   </Grid>
                 )
