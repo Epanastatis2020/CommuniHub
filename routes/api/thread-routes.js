@@ -49,6 +49,7 @@ router.get('/api/thread/:threadId', (req, res) => {
     Thread.findOne({
         _id: req.params.threadId,
     })
+        .populate('user_id')
         .then((response) => {
             if (response) {
                 res.json(response);
