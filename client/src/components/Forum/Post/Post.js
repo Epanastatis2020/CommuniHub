@@ -38,6 +38,7 @@ export default function Post(props) {
     let currentUpvotes = upvotes;
     SetUpvotes(currentUpvotes + 1)
     console.log("CURRENT UPDATED UPVOTES", upvotes);
+    console.log("THREAD ID INSIDE UPVOTE HANDLER", props.thread_id)
     const postData = {
       _id: props._id,
       content: props.content,

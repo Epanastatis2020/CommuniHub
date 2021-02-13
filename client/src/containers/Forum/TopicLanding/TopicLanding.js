@@ -75,9 +75,9 @@ const TopicLanding = (props) => {
       };
 
       const fetchPosts = async () => {
-        console.log("THREAD ID USED FOR POST CALL", props.thread_id)
+        // console.log("THREAD ID USED FOR POST CALL", props.thread_id)
         const postData = await getSpecificPosts(props.thread_id)
-        console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
+        // console.log("THE POST DATA RETURNED IN THE USEEFFECT", postData)
         SetPosts(postData)
         SetLoading(false);
       };
@@ -180,6 +180,7 @@ const TopicLanding = (props) => {
                         downvotes={post.downvotes} 
                         _id={post._id}
                         key={post._id}
+                        thread_id={props.thread_id}
                     />
                   </Grid>
                 )

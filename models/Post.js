@@ -10,7 +10,7 @@ const PostSchema = new Schema(
     thread_id: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'Forum',
+        ref: 'Thread',
     },
     user_id: {
         type: Schema.Types.ObjectId,
