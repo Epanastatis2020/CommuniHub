@@ -7,6 +7,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
+import * as timeago from 'timeago.js';
+
 const useStyles = makeStyles((theme) => ({
     root: {
       height: "auto",
@@ -27,7 +29,7 @@ export default function TopicStarter(props) {
             <Avatar alt={topic.title} className={classes.blue} />
           }
         title={topic.title}
-        subheader={topic.createdAt}
+        subheader={timeago.format(topic.createdAt)}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

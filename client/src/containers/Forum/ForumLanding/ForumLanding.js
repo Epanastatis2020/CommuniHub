@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { getThreads } from '../../../services/ThreadService';
 import { getSpecificPosts } from '../../../services/PostService';
 
@@ -55,10 +56,11 @@ export default function ForumLanding() {
       //   const preparePostsForThread = await getPostsForThread(topic._id)
       //   newData.push([<Link href="/topic" color="inherit">{topic.title}</Link>, topic.content, preparePostsForThread, topic.updatedAt]) 
       // })
+      // Can refactor with .map()
       for (let i = 0; i < res.length; i++) {
         const preparePostsForThread = await getPostsForThread(res[i]._id)
         let threadID = "/topic/" + res[i]._id;
-        newData.push([<Link href={threadID} color="inherit">{res[i].title}</Link>, res[i].content, preparePostsForThread, <TimeAgo datetime={res[i].updatedAt} />])
+        newData.push([<Link component={RouterLink} to={threadID} color="inherit">{res[i].title}</Link>, res[i].content, preparePostsForThread, <TimeAgo datetime={res[i].updatedAt} />])
       }
       setTopics(newData);
       setLoading(false);

@@ -11,8 +11,8 @@ import User from '../../models/User.js';
 router.use(cors());
 
 router.get('/api/user/:userId', (req, res) => {
-    User.findOne({
-        _id: req.params.UserId,
+    User.findById({
+        _id: req.params.userId,
     })
         .then((response) => {
             if (response) {
