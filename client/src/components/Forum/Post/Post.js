@@ -1,6 +1,8 @@
-import {React, useState} from 'react';
-import { updatePost } from '../../../services/PostService';
+import {React, useState, useEffect} from 'react';
+import { updatePost, deletePost } from '../../../services/PostService';
+import { getCurrentUserId } from '../../../services/UserService';
 
+import { toast } from "react-toastify";
 import * as timeago from 'timeago.js';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +17,7 @@ import { blue } from '@material-ui/core/colors';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
       backgroundColor: blue[500],
     },
+    deleteBtn: {
+      marginLeft: 'auto',
+    }
   }));
 
 export default function Post(props) {
@@ -31,6 +37,21 @@ export default function Post(props) {
   const [loading, SetLoading] = useState(false)
   const [upvotes, SetUpvotes] = useState(props.upvotes)
   const [downvotes, SetDownvotes] = useState(props.downvotes)
+  const [currentUser, SetCurrentUser] = useState()
+
+  useEffect(() => {
+
+    const fetchCurrentUserID = async ()  => {
+      const CurrentUserId = await getCurrentUserId().catch((err) => {
+        console.log(err);
+        toast.dark(err);
+      })
+      // console.log("CurrentUserID here", CurrentUserId)
+      SetCurrentUser(CurrentUserId);
+    };
+
+    fetchCurrentUserID();
+  }, []);
 
   const upvoteHandler = (e) => {
     e.preventDefault();
@@ -66,6 +87,17 @@ export default function Post(props) {
     SetLoading(false)    
   }
 
+  const deletePostHandler = async (e) => {
+    e.preventDefault();
+    SetLoading(true);
+    await deletePost(props._id).catch((err) => {
+      console.log(err);
+      toast.dark(err.message);
+    });
+    SetLoading(false)
+    window.location.reload();
+  };
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -90,6 +122,10 @@ export default function Post(props) {
           <ThumbDownAltIcon color="error"/>
           <Typography variant="caption" color="error">{downvotes}</Typography>
         </IconButton>
+        {props.user_id._id === currentUser ? 
+        <IconButton aria-label="delete" onClick={deletePostHandler} className={classes.deleteBtn}>
+          <DeleteForeverIcon color="secondary" />
+        </IconButton> : <IconButton />}
       </CardActions>
       }
     </Card>
