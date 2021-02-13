@@ -37,6 +37,7 @@ export default function Post(props) {
     SetLoading(true)
     let currentUpvotes = upvotes;
     SetUpvotes(currentUpvotes + 1)
+    console.log("CURRENT UPDATED UPVOTES", upvotes);
     const postData = {
       _id: props._id,
       content: props.content,
