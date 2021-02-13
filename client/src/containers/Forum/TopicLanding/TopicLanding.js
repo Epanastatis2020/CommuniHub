@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import { getThread } from '../../../services/ThreadService';
 import { addPost, getSpecificPosts } from '../../../services/PostService';
 import { getCurrentUserId, getUserName } from '../../../services/UserService';
@@ -27,35 +27,35 @@ const useStyles = makeStyles((theme) => ({
 
 const TopicLanding = (props) => {
 
-    const standInTopic = {
-      author: "user_id would go here if this worked",
-      title: "Test",
-      createdAt: "2021-02-08T09:37:54.510+00:00",
-      content: "This is the test data, it seems the API call hasn't been successful"
-    }
+    // const standInTopic = {
+    //   author: "user_id would go here if this worked",
+    //   title: "Test",
+    //   createdAt: "2021-02-08T09:37:54.510+00:00",
+    //   content: "This is the test data, it seems the API call hasn't been successful"
+    // }
 
-    const standInPost = [
-      {
-        content: "This is a test post. It would appear the API call hasn't been successful",
-        _id: "093khfaskdfjasklf203",
-        author: "908908fsadkhfjsaldkfj",
-        createdAt: "2021-02-08T09:37:54.510+00:00",
-        updatedAt: "2021-02-08T11:50:10.510+00:00",
-        upvotes: 5,
-        downvotes: 0
-      },
-    ]
+    // const standInPost = [
+    //   {
+    //     content: "This is a test post. It would appear the API call hasn't been successful",
+    //     _id: "093khfaskdfjasklf203",
+    //     author: "908908fsadkhfjsaldkfj",
+    //     createdAt: "2021-02-08T09:37:54.510+00:00",
+    //     updatedAt: "2021-02-08T11:50:10.510+00:00",
+    //     upvotes: 5,
+    //     downvotes: 0
+    //   },
+    // ]
 
     const [replyMode, SetReplyMode] = useState(false);
     const [replyValue, SetReplyValue] = useState();
     const [loading, SetLoading] = useState(false);
-    const [topicData, SetTopicData] = useState(standInTopic);
-    const [posts, SetPosts] = useState(standInPost);
+    const [topicData, SetTopicData] = useState();
+    const [posts, SetPosts] = useState();
     const [currentUser, SetCurrentUser] = useState()
 
     const classes = useStyles();
     
-    useEffect(() => {
+    useLayoutEffect(() => {
 
       const fetchCurrentUserID = async ()  => {
         const CurrentUserId = await getCurrentUserId().catch((err) => {
@@ -87,9 +87,11 @@ const TopicLanding = (props) => {
     }, []);
 
     const parentForum = {
-        title: topicData.title,
+        title: topicData?.title,
+        // title: "TEST",
         image: 'https://rimh2.domainstatic.com.au/ATaM9ZUwi9t_p-g4UKcB9xslqi0=/fit-in/1920x1080/filters:format(jpeg):quality(80):no_upscale()/http://b.domainstatic.com.au.s3-website-ap-southeast-2.amazonaws.com/6e367c5b-353d-4583-b65a-6af2af82a4d8-w1440-h1200',
-        imgText: topicData.title,
+        imgText: topicData?.title,
+        // imgText: "TEST"
     };
 
     const updateReplyValue = useCallback(({ target: { value }}) => {
@@ -163,10 +165,10 @@ const TopicLanding = (props) => {
               </Grid>
               {!isEmpty(topicData)?  
               <Grid item xs={12}>
-                <TopicStarter topic={topicData}/>
+                <TopicStarter topic={topicData || []}/>
               </Grid> : ""}
               {replyMode? postReplySection :
-              posts.map(post => (
+              posts?.map(post => (
                   <Grid item xs={12} key={post._id}>
                     <Post 
                         author={post.user_id.name}
