@@ -1,6 +1,7 @@
 import React from "react";
 import MUIDataTable from "mui-datatables";
 import Button from '@material-ui/core/Button';
+import { Link as RouterLink } from 'react-router-dom';
 
 class TopicTable extends React.Component {
   
@@ -57,7 +58,7 @@ class TopicTable extends React.Component {
 
     return (
       this.props.data.length > 0 && <MUIDataTable
-        title={<div><Button variant="contained" color="primary">NEW TOPIC</Button></div>}
+        title={<div><Button variant="contained" color="primary" component={RouterLink} to="/newtopic">NEW TOPIC</Button></div>}
         data={this.props.data}
         columns={columns}
         options={options}
