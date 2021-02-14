@@ -26,4 +26,18 @@ router.get('/api/user/:userId', (req, res) => {
         });
 });
 
+router.put('/api/user/:userId', (req, res) => {
+    User.findByIdAndUpdate(req.params.userId, { name: req.body.name })
+        .then((response) => {
+            if (response) {
+                res.json(response);
+            } else {
+                res.status(400).json({ error: 'User does not exist' });
+            }
+        })
+        .catch((err) => {
+            res.send('error: ' + err);
+        });
+});
+
 export default router;

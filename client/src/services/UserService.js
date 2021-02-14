@@ -26,3 +26,18 @@ export const getUserName = userID => {
         console.log(err);
     })
 }
+
+// update a user's name
+
+export const updateUserName = userData => {
+    return axiosAuth
+    .put('/user/' + userData._id, {
+        name: userData.name,
+    })
+    .then(response => {
+        return response.data
+    })
+    .catch(err => {
+        console.log(err);
+    })
+}
