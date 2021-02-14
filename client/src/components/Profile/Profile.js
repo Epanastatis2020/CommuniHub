@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../../context';
 import firebase from '../../firebase';
 import { toast } from "react-toastify";
+import { updateUserName, getCurrentUserId } from '../../services/UserService';
 
 //mUI imports
 import TextField from '@material-ui/core/TextField';
@@ -47,9 +48,26 @@ const WhiteTextTypography = withStyles({
   })(Typography);
 
   export default function Profile() {
+
     const classes = useStyles();
     
     const { state, dispatch } = useContext(Context);
+    const [dbUserID, SetDbUserID] = useState(); 
+
+    useEffect(() => {
+
+      const fetchCurrentUserID = async ()  => {
+        const CurrentUserId = await getCurrentUserId().catch((err) => {
+          console.log(err);
+          toast.dark(err);
+        })
+        // console.log("CurrentUserID here", CurrentUserId)
+        SetDbUserID(CurrentUserId);
+      };
+
+      fetchCurrentUserID();
+    }, []);
+
     let { user } = state;
 
     if (user === null) {
@@ -66,17 +84,28 @@ const WhiteTextTypography = withStyles({
     const onSubmit = async (e) => {
       e.preventDefault();
       setLoading(true);
-      const currentUser = firebase.auth().currentUser;
-      console.log("USER OBJECT =======> ", currentUser);
+      const currentUser = await firebase.auth().currentUser;
       currentUser.updateProfile({
         displayName: name,
       }).then(function() {
         toast.dark("Name successfully updated")
-        setLoading(false)
       }).catch(function(error) {
         toast.dark(error)
-        setLoading(false)
       });
+      // console.log("DB USER ID HERE", dbUserID);
+      // console.log("NAME", name);
+      let payload = {
+        name: name,
+        _id: dbUserID
+      }
+      // console.log("THIS IS THE PAYLOAD", payload);
+      const updateTheUserName = async (payload) => {
+        !payload._id ? toast.err("the ID is not loaded yet") : await updateUserName(payload).catch((err) => {
+          toast.dark(err.message);
+        })
+      }
+      updateTheUserName(payload);
+      setLoading(false);
     };
 
     const SubmitBtn = () => {
