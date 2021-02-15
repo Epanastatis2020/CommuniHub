@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import firebase from "../../firebase";
 import { toast } from "react-toastify";
 
@@ -67,8 +66,6 @@ const WhiteTextTypography = withStyles({
 export default function Register() {
     const classes = useStyles();
 
-    const history = useHistory();
-
     const [loading, setLoading] = useState(false); 
 
     const [formState, setFormState] = useState({
@@ -92,7 +89,7 @@ export default function Register() {
         toast.dark(err.message);
         setLoading(false);
       });
-      history.push("/dashboard");
+      window.location.replace("/dashboard")
   };
   
     const SubmitBtn = () => {
